@@ -3,6 +3,7 @@ title: "Razlike između ser i estar"
 date: "2025-03-10"
 excerpt: "Jedan od najčešćih izazova za učenike španskog — kada koristiti ser, a kada estar."
 coverImage: "/Spain 1.jpg"
+categories: ["Gramatika", "Glagoli", "Srednji nivo"]
 ---
 
 ## Večita dilema

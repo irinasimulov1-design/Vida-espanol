@@ -3,6 +3,7 @@ title: "Španski subjunktiv — osnove koje morate znati"
 date: "2025-06-05"
 excerpt: "Subjunktiv je jedan od najvažnijih i najzahtevnijih delova španske gramatike. Evo kako da ga savladate korak po korak."
 coverImage: "/Spain 3.jpg"
+categories: ["Gramatika", "Subjunktiv", "Napredni nivo"]
 ---
 
 ## Šta je subjunktiv?

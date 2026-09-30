@@ -3,6 +3,7 @@ title: "Prvi koraci u učenju španskog"
 date: "2024-12-15"
 excerpt: "Kako sam počeo/počela da učim španski i koji su prvi koraci koji su mi najviše pomogli na tom putu."
 coverImage: "/Spain 3.jpg"
+categories: ["Početni nivo", "Motivacija", "Lično iskustvo"]
 ---
 
 ## Zašto španski?

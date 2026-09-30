@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
+import Newsletter from "@/components/Newsletter";
 
 export default function Home() {
   const posts = getAllPosts().slice(0, 3);
@@ -129,6 +130,9 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      {/* Newsletter */}
+      <Newsletter />
     </>
   );
 }

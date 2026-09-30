@@ -26,10 +26,27 @@ export default function PostCard({ post }: { post: Post }) {
           </div>
         )}
         <div className="p-6">
-          <div className="flex items-center gap-3 text-xs">
-            <span className="font-semibold uppercase tracking-wider text-teal-600">
-              Blog
-            </span>
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            {post.categories.length > 0 ? (
+              post.categories.map((cat, i) => (
+                <span
+                  key={cat}
+                  className={`rounded-full px-2.5 py-0.5 font-semibold uppercase tracking-wider ${
+                    [
+                      "bg-teal-50 text-teal-600",
+                      "bg-amber-50 text-amber-600",
+                      "bg-rose-50 text-rose-600",
+                    ][i % 3]
+                  }`}
+                >
+                  {cat}
+                </span>
+              ))
+            ) : (
+              <span className="font-semibold uppercase tracking-wider text-teal-600">
+                Blog
+              </span>
+            )}
             <time className="text-zinc-400">{formatDate(post.date)}</time>
           </div>
           <h3 className="mt-3 text-lg font-bold leading-snug text-zinc-900 group-hover:text-teal-700 transition-colors">

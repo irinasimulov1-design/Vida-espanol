@@ -3,6 +3,7 @@ title: "Korisni izrazi za putovanje"
 date: "2025-01-20"
 excerpt: "Najvažniji španski izrazi koji će vam pomoći da se snađete na putovanju kroz špansko govorno područje."
 coverImage: "/Spain 2.jpg"
+categories: ["Vokabular", "Putovanje", "Početni nivo"]
 ---
 
 ## Osnovni izrazi

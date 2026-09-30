@@ -12,6 +12,7 @@ export interface Post {
   date: string;
   excerpt: string;
   coverImage: string;
+  categories: string[];
 }
 
 export interface PostWithContent extends Post {
@@ -35,6 +36,7 @@ export function getAllPosts(): Post[] {
         date: data.date,
         excerpt: data.excerpt,
         coverImage: data.coverImage ?? "",
+        categories: data.categories ?? [],
       };
     });
 
@@ -66,6 +68,7 @@ export async function getPostBySlug(
     date: data.date,
     excerpt: data.excerpt,
     coverImage: data.coverImage ?? "",
+    categories: data.categories ?? [],
     contentHtml,
   };
 }
