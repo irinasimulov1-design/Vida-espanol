@@ -12,7 +12,7 @@ export default function Newsletter() {
     setStatus("loading");
 
     try {
-      const res = await fetch("/api/newsletter", {
+      const res = await fetch("https://vida-newsletter.irinastojanovich.workers.dev", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
