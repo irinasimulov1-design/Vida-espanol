@@ -1,0 +1,77 @@
+{
+  "sr": {
+    "naziv": "Srbija i region (srpski)",
+    "hl": "sr",
+    "gl": [
+      "rs"
+    ],
+    "trendsGeo": "RS",
+    "slova": "abcčćdđefghijklmnoprsštuvzž",
+    "pitanja": [
+      "kako",
+      "zašto",
+      "šta je",
+      "koliko",
+      "da li",
+      "kada"
+    ],
+    "fraze": [
+      "španski",
+      "španski jezik",
+      "učenje španskog",
+      "španska gramatika",
+      "španski za početnike",
+      "ser i estar",
+      "život u španiji"
+    ],
+    "iskljuci": [
+      "zid",
+      "vetar",
+      "torta",
+      "građanski rat",
+      "pick and roll",
+      "protokol",
+      "fudbal",
+      "liga",
+      "serija"
+    ]
+  },
+  "en": {
+    "naziv": "English-speaking markets (US + UK)",
+    "hl": "en",
+    "gl": [
+      "us",
+      "gb"
+    ],
+    "trendsGeo": "US",
+    "slova": "abcdefghijklmnopqrstuvwxyz",
+    "pitanja": [
+      "how to",
+      "why",
+      "what is",
+      "can you",
+      "is it",
+      "best way to"
+    ],
+    "fraze": [
+      "learn spanish",
+      "spanish grammar",
+      "spanish for beginners",
+      "ser vs estar",
+      "spanish subjunctive",
+      "spanish phrases",
+      "moving to spain"
+    ],
+    "iskljuci": [
+      "civil war",
+      "flu",
+      "fly",
+      "omelette",
+      "omelet",
+      "moss",
+      "inquisition",
+      "soccer",
+      "football"
+    ]
+  }
+}

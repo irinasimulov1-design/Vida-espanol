@@ -1,46 +1,41 @@
 import Link from "next/link";
+import Logo from "@/components/Logo";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n";
+import { bookingHref, href } from "@/lib/routes";
 
-export default function Header() {
+export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"] }) {
+  const navLinks = [
+    { label: t.home, href: href("home", lang), className: "hidden md:block" },
+    { label: t.blog, href: href("blog", lang), className: "" },
+    { label: t.about, href: href("about", lang), className: "hidden sm:block" },
+  ];
+
   return (
-    <header className="absolute top-0 left-0 w-full z-50">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-8 py-5">
-        <Link
-          href="/"
-          className="text-2xl font-bold tracking-tight text-white"
-        >
-          Vida<span className="text-amber-400">*</span>
-        </Link>
-        <ul className="flex items-center gap-8 text-sm font-medium">
+    <header className="sticky top-0 z-50 w-full border-b border-bez bg-cloud/95 backdrop-blur-sm">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-8">
+        <Logo lang={lang} />
+        <ul className="flex items-center gap-3 text-sm font-medium sm:gap-6">
+          {navLinks.map((link) => (
+            <li key={link.href} className={link.className}>
+              <Link
+                href={link.href}
+                className="text-braon transition-colors hover:text-terracotta"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
           <li>
-            <Link
-              href="/"
-              className="text-white/80 transition-colors hover:text-white"
-            >
-              Početna
-            </Link>
+            <LanguageSwitcher lang={lang} label={t.language} />
           </li>
           <li>
             <Link
-              href="/blog"
-              className="text-white/80 transition-colors hover:text-white"
+              href={bookingHref(lang)}
+              className="whitespace-nowrap rounded-full bg-bordo px-4 py-2 text-cloud transition hover:brightness-110 sm:px-5"
             >
-              Blog
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/o-meni"
-              className="text-white/80 transition-colors hover:text-white"
-            >
-              O meni
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/o-meni"
-              className="rounded-full bg-rose-500 px-5 py-2 text-white transition-colors hover:bg-rose-600"
-            >
-              Kontakt
+              {t.book}
             </Link>
           </li>
         </ul>

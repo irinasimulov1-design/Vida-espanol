@@ -1,5 +1,7 @@
 "use client";
 
+import { track } from "@/lib/track";
+
 const SITES = [
   {
     name: "Facebook",
@@ -21,7 +23,7 @@ const SITES = [
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
       </svg>
     ),
-    color: "hover:text-zinc-900",
+    color: "hover:text-braon",
   },
   {
     name: "LinkedIn",
@@ -36,20 +38,31 @@ const SITES = [
   },
 ] as const;
 
-export default function ShareButtons({ title }: { title: string }) {
-  const url = typeof window !== "undefined" ? window.location.href : "";
-
+export default function ShareButtons({
+  title,
+  label,
+  shareOn,
+}: {
+  title: string;
+  label: string;
+  shareOn: string;
+}) {
   return (
     <div className="flex items-center gap-4">
-      <span className="text-sm font-medium text-zinc-500">Podeli:</span>
+      <span className="text-sm font-medium text-braon/70">{label}</span>
       {SITES.map((site) => (
         <a
           key={site.name}
-          href={site.href(url, title)}
+          href={site.href("", title)}
+          // Statički export renderuje prazan URL; pravi URL se upisuje u trenutku klika.
+          onClick={(e) => {
+            e.currentTarget.href = site.href(window.location.href, title);
+            track("podeli_post", { mreza: site.name });
+          }}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Podeli na ${site.name}`}
-          className={`text-zinc-400 transition-colors ${site.color}`}
+          aria-label={`${shareOn} ${site.name}`}
+          className={`text-terracotta transition-colors ${site.color}`}
         >
           {site.icon}
         </a>
