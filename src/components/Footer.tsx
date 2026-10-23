@@ -8,15 +8,16 @@ import { bookingHref, href } from "@/lib/routes";
 import { site } from "@/lib/site";
 
 export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
+  // Na verde pozadini tekst na hover postaje blanco, a linija ispod dobija boju linka.
   const footerLinks = [
-    { label: t.nav.home, href: href("home", lang) },
-    { label: t.nav.blog, href: href("blog", lang) },
-    { label: t.nav.about, href: href("about", lang) },
-    { label: t.nav.book, href: bookingHref(lang) },
+    { label: t.nav.home, href: href("home", lang), accent: "[--akcenat:var(--color-naranja)]" },
+    { label: t.nav.blog, href: href("blog", lang), accent: "[--akcenat:var(--color-oro)]" },
+    { label: t.nav.about, href: href("about", lang), accent: "[--akcenat:var(--color-mostaza)]" },
+    { label: t.nav.book, href: bookingHref(lang), accent: "[--akcenat:var(--color-oro)]" },
   ];
 
   return (
-    <footer className="bg-verde text-blanco/80 inset-shadow-sekcija">
+    <footer className="bg-verde text-blanco/80 inset-shadow-sekcija [--akcenat-tekst:var(--color-blanco)]">
       <div className="mx-auto max-w-300 px-4 py-16 md:px-8">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
           {/* Brand */}
@@ -34,7 +35,7 @@ export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
             <ul className="mt-6 flex flex-col gap-3 text-sm">
               {footerLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="transition-colors hover:text-oro">
+                  <Link href={link.href} className={`nav-link ${link.accent}`}>
                     {link.label}
                   </Link>
                 </li>
@@ -52,7 +53,7 @@ export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
             <h3 className="mt-8 text-blanco text-shadow-dubina-sm">{t.footer.writeMe}</h3>
             <ul className="mt-4 flex flex-col gap-2 text-sm">
               <li>
-                <a href={`mailto:${site.email}`} className="transition-colors hover:text-oro">
+                <a href={`mailto:${site.email}`} className="nav-link [--akcenat:var(--color-naranja)]">
                   {site.email}
                 </a>
               </li>
@@ -65,7 +66,7 @@ export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
       <div className="border-t border-blanco/15">
         <div className="mx-auto flex max-w-300 flex-wrap items-center justify-center gap-x-6 gap-y-2 px-4 py-5 text-xs text-blanco/60 md:px-8">
           <span>&copy; {new Date().getFullYear()} VIDA — a la española</span>
-          <Link href={href("privacy", lang)} className="transition-colors hover:text-oro">
+          <Link href={href("privacy", lang)} className="nav-link [--akcenat:var(--color-naranja)]">
             {t.footer.privacy}
           </Link>
           <CookieSettingsLink label={t.footer.cookieSettings} />

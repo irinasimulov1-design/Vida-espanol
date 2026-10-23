@@ -50,6 +50,9 @@
   --shadow-fotka: 0 28px 60px -12px rgba(0, 0, 0, 0.45);
   --text-shadow-dubina: 0 2px 14px rgba(0, 0, 0, 0.3);
   --text-shadow-dubina-sm: 0 1px 6px rgba(0, 0, 0, 0.25);
+  /* hover u headeru/footeru: link i dugme se blago podignu i bace malu senku */
+  --text-shadow-podignuto: 0 4px 6px rgba(0, 0, 0, 0.22);
+  --shadow-podignuto: 0 8px 16px -6px rgba(0, 0, 0, 0.35);
 }
 
 @layer base {
@@ -174,6 +177,39 @@
 
   .link:hover {
     text-decoration-color: currentColor;
+  }
+
+  /* Link u headeru/footeru: na hover tekst dobija boju --akcenat (ili --akcenat-tekst),
+     a ispod se s leva razvlači linija u boji --akcenat. Svaki link postavlja svoju boju. */
+  .nav-link {
+    position: relative;
+    display: inline-block;
+    transition: color 200ms, transform 200ms ease-out, text-shadow 200ms;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    background: var(--akcenat, var(--color-naranja));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 250ms ease-out;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    color: var(--akcenat-tekst, var(--akcenat, var(--color-naranja)));
+    transform: translateY(-2px);
+    text-shadow: var(--text-shadow-podignuto);
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    transform: scaleX(1);
   }
 
   /* Tretman fotki: topao filmski ton */

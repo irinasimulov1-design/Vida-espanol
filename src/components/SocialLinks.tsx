@@ -39,11 +39,12 @@ function PreplyIcon() {
 
 type Profile = keyof typeof site.social;
 
-const profiles: { key: Profile; icon: ReactNode }[] = [
-  { key: "instagram", icon: <InstagramIcon /> },
-  { key: "youtube", icon: <YouTubeIcon /> },
-  { key: "linkedin", icon: <LinkedInIcon /> },
-  { key: "preply", icon: <PreplyIcon /> },
+// Hover boja na tamnoj pozadini (footer): svaka ikonica svoja boja brenda.
+const profiles: { key: Profile; icon: ReactNode; hoverDark: string }[] = [
+  { key: "instagram", icon: <InstagramIcon />, hoverDark: "hover:bg-naranja hover:text-blanco" },
+  { key: "youtube", icon: <YouTubeIcon />, hoverDark: "hover:bg-oro hover:text-negro" },
+  { key: "linkedin", icon: <LinkedInIcon />, hoverDark: "hover:bg-mostaza hover:text-negro" },
+  { key: "preply", icon: <PreplyIcon />, hoverDark: "hover:bg-blanco hover:text-verde" },
 ];
 
 /** Linkovi ka profilima; profil bez URL-a u site.ts je neaktivna ikonica („uskoro“). */
@@ -56,13 +57,13 @@ export default function SocialLinks({
 }) {
   const style =
     variant === "dark"
-      ? "bg-blanco/10 text-blanco/80 hover:bg-oro hover:text-negro"
+      ? "bg-blanco/10 text-blanco/80 hover:-translate-y-0.5"
       : "bg-hormigon text-negro hover:bg-negro hover:text-blanco";
   const placeholderStyle = variant === "dark" ? "bg-blanco/10 text-blanco" : "bg-hormigon text-negro";
 
   return (
     <div className="flex gap-3">
-      {profiles.map(({ key, icon }) =>
+      {profiles.map(({ key, icon, hoverDark }) =>
         site.social[key] ? (
           <a
             key={key}
@@ -72,7 +73,9 @@ export default function SocialLinks({
             aria-label={labels[key]}
             title={labels[key]}
             onClick={() => track("klik_profil", { profil: key })}
-            className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${style}`}
+            className={`flex h-10 w-10 items-center justify-center rounded-full transition ${style} ${
+              variant === "dark" ? hoverDark : ""
+            }`}
           >
             {icon}
           </a>

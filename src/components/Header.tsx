@@ -6,10 +6,11 @@ import type { Dictionary } from "@/i18n";
 import { bookingHref, href } from "@/lib/routes";
 
 export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"] }) {
+  // Svaki link ima svoju boju na hover (naranja i rojo nikad jedna do druge).
   const navLinks = [
-    { label: t.home, href: href("home", lang), className: "hidden md:block" },
-    { label: t.blog, href: href("blog", lang), className: "" },
-    { label: t.about, href: href("about", lang), className: "hidden sm:block" },
+    { label: t.home, href: href("home", lang), className: "hidden md:block", accent: "[--akcenat:var(--color-naranja)]" },
+    { label: t.blog, href: href("blog", lang), className: "", accent: "[--akcenat:var(--color-verde)]" },
+    { label: t.about, href: href("about", lang), className: "hidden sm:block", accent: "[--akcenat:var(--color-mostaza)]" },
   ];
 
   return (
@@ -21,7 +22,7 @@ export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"]
             <li key={link.href} className={link.className}>
               <Link
                 href={link.href}
-                className="text-negro decoration-naranja underline-offset-4 hover:underline"
+                className={`nav-link text-negro ${link.accent}`}
               >
                 {link.label}
               </Link>
@@ -33,7 +34,7 @@ export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"]
           <li>
             <Link
               href={bookingHref(lang)}
-              className="whitespace-nowrap btn"
+              className="whitespace-nowrap btn transition duration-200 hover:-translate-y-0.5 hover:shadow-podignuto"
             >
               {t.book}
             </Link>

@@ -46,7 +46,7 @@ export default function LanguageSwitcher({ lang, label }: { lang: Locale; label:
               }
               track("promena_jezika", { sa: lang, na: locale, nacin: "rucno" });
             }}
-            className="px-2.5 py-1 text-negro/60 transition-colors hover:text-negro"
+            className="px-2.5 py-1 text-negro/60 transition-colors hover:bg-oro hover:text-negro"
           >
             {locale}
           </a>

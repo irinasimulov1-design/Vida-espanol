@@ -3,10 +3,10 @@ import type { Locale } from "@/i18n/config";
 
 export default function Logo({ lang, light = false }: { lang: Locale; light?: boolean }) {
   return (
-    <Link href={`/${lang}`} className="flex flex-col leading-none" aria-label="VIDA — a la española">
+    <Link href={`/${lang}`} className="group flex flex-col leading-none" aria-label="VIDA — a la española">
       <span
-        className={`font-display text-2xl font-medium tracking-[0.12em] ${
-          light ? "text-blanco" : "text-negro"
+        className={`font-display text-2xl font-medium tracking-[0.12em] transition-colors ${
+          light ? "text-blanco group-hover:text-oro" : "text-negro group-hover:text-verde"
         }`}
       >
         VIDA
