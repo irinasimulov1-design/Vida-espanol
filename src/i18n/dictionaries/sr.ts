@@ -1,0 +1,169 @@
+const sr = {
+  meta: {
+    siteDescription:
+      "Blog o španskom jeziku i životu na španski način. Gramatika bez muke, reči za stvaran život i priče iz Španije. El idioma se vive.",
+    blogTitle: "Blog",
+    blogDescription: "Tekstovi o španskom jeziku i životu na španski način.",
+    aboutTitle: "O meni",
+    aboutDescription: "Upoznaj Irinu, autorku bloga VIDA a la española.",
+    privacyTitle: "Politika privatnosti",
+    privacyDescription: "Koje alate koristim na sajtu, zašto i kako da ih isključiš.",
+    postNotFound: "Tekst nije pronađen",
+  },
+  nav: {
+    home: "Početna",
+    blog: "Blog",
+    about: "O meni",
+    book: "Zakaži čas",
+    language: "Jezik",
+  },
+  hero: {
+    motto: "El idioma se vive.",
+    titleLine1: "Španski se ne uči.",
+    titleLine2: "Španski se živi.",
+    text: "Ovde pišem o španskom onako kako se stvarno govori — u kafiću, na pijaci, sa komšijom. Reči koje ćeš koristiti, greške koje smeš da praviš i mala zadovoljstva kad te neko konačno razume.",
+    ctaBlog: "Čitaj blog",
+    ctaBook: "Zakaži čas sa Irinom",
+    highlights: ["Praktični saveti", "Lična iskustva", "Bez straha od greške"],
+    imageAlt: "Irina, profesorka španskog",
+    nameCardRole: "Hola! Ja pišem ovaj blog.",
+  },
+  home: {
+    blogEyebrow: "Sa bloga",
+    blogTitle: "Najnoviji tekstovi",
+    blogText: "Gramatika bez muke, reči za stvaran život i priče iz Španije.",
+    allPosts: "Svi tekstovi →",
+    empty: "Uskoro stižu novi tekstovi.",
+  },
+  blog: {
+    eyebrow: "El idioma se vive.",
+    title: "Blog",
+    text: "Gramatika bez muke, reči za stvaran život i priče iz Španije. Uzmi kafu i čitaj redom — ili tamo gde te srce vuče.",
+    empty: "Uskoro stižu novi tekstovi.",
+  },
+  post: {
+    updated: "Ažurirano",
+    summary: "Ukratko",
+    faqTitle: "Česta pitanja",
+    ctaEyebrow: "¿Hablamos?",
+    ctaTitle: "Hoćeš da ovo probaš uživo?",
+    ctaText:
+      "Čitanje je super početak, ali jezik se živi u razgovoru. Zakaži čas sa Irinom i pričaj španski od prvog minuta.",
+    ctaButton: "Zakaži čas",
+    back: "← Nazad na blog",
+    share: "Podeli:",
+    shareOn: "Podeli na",
+    breadcrumbHome: "Početna",
+  },
+  author: {
+    eyebrow: "Ko piše",
+    bio: "Profesorka španskog koja veruje da se jezik ne uči iz tabela, nego živi — kroz razgovor, muziku, hranu i male svakodnevne trenutke.",
+    more: "Više o meni →",
+  },
+  social: {
+    title: "Pronađi me i na",
+    instagram: "Instagram",
+    youtube: "YouTube",
+    linkedin: "LinkedIn",
+    preply: "Preply",
+    soon: "uskoro",
+  },
+  booking: {
+    eyebrow: "¿Hablamos?",
+    title: "Zakaži čas sa Irinom",
+    text: "Ostavi mi svoje podatke i izaberi termin u kalendaru koji ti odgovara. Javiću ti se da potvrdimo, pa krećemo — na španskom, naravno.",
+    firstName: "Ime",
+    firstNamePlaceholder: "Tvoje ime",
+    lastName: "Prezime",
+    lastNamePlaceholder: "Tvoje prezime",
+    email: "Email",
+    emailPlaceholder: "tvoj@email.com",
+    phone: "Telefon",
+    phonePlaceholder: "+381 60 123 4567",
+    submit: "Izaberi termin →",
+    sending: "Šaljem...",
+    thanks: "¡Gracias, {ime}!",
+    saved: "Tvoji podaci su sačuvani. Izaberi termin u kalendaru koji se upravo otvorio.",
+    notOpened: "Ako se kalendar nije otvorio, klikni dugme ispod.",
+    openCalendar: "Otvori kalendar",
+    again: "Zakaži još jedan termin",
+  },
+  footer: {
+    links: "Linkovi",
+    followMe: "Prati me",
+    writeMe: "Piši mi",
+    tagline: "Španski se ne uči. Španski se živi.",
+    privacy: "Politika privatnosti",
+    cookieSettings: "Podešavanja kolačića",
+  },
+  cookies: {
+    text: "Koristim kolačiće da vidim koji tekstovi ti stvarno pomažu. Ništa ne prodajem dalje i nema reklama.",
+    accept: "Prihvatam",
+    essential: "Samo neophodno",
+    more: "Saznaj više",
+  },
+  languageHint: {
+    post: "Ovaj tekst postoji i na srpskom.",
+    page: "Ova stranica postoji i na srpskom.",
+    link: "Čitaj na srpskom →",
+    close: "Zatvori",
+  },
+  about: {
+    title: "Ko je Irina Stojanović?",
+    introLabel: "Da se upoznamo:",
+    paragraphs: [
+      "Ja sam Irina Stojanović, autorka bloga VIDA a la española. Španski jezik me je oduvek fascinirao i odlučila sam da svoja iskustva podelim sa svima koji kreću istim putem.",
+      "Kroz godine učenja skupila sam mnoštvo korisnih saveta, tehnika i resursa. Od prvih koraka u učenju osnova, preko gramatičkih izazova, do trenutka kada sam počela da se slobodno izražavam na španskom — svaki korak je bio vredan truda.",
+      "Diplome i sertifikati su važni, ali ono što donosi najveće zadovoljstvo jeste videti kako drugi napreduju. Svaki komentar, svaka poruka u kojoj neko kaže da mu je tekst pomogao — to je najlepša potvrda.",
+      "Takođe, radujem se i ponosna sam na svakodnevne poruke koje dobijam od ljudi na društvenim mrežama. Zahvaljujući objavama na blogu i Instagramu, mnogi su pronašli dodatnu podršku i motivaciju za učenje španskog jezika.",
+    ],
+    writeMe: "Piši mi!",
+    preplyCta: "Časovi na Preply-ju",
+    methodTitle: "Šta je najvažnije?",
+    imageAlt: "Irina, profesorka španskog",
+    pillars: [
+      {
+        title: "1. VO — Vokabular",
+        text: "Sve počinje sa rečima. Prvo nauči reči, a zatim od njih sklapaj rečenice. Na blogu učiš razne tehnike za lakše pamćenje reči i izraza koji se zaista koriste u svakodnevnom životu.",
+      },
+      {
+        title: "2. KU — Komunikacija",
+        text: "Naučene reči postaju vredne kroz praktičnu komunikaciju. Učimo kroz dijaloge u realnim situacijama — restoran, putovanje, posao — i upoznajemo kulturu španskog govornog područja.",
+      },
+      {
+        title: "3. M — Motivacija",
+        text: "Svakome je potrebna podrška i motivacija. Cilj je da uspešno progovoriš španski — svojim tempom i sa radošću. Kroz blog delim priče, savete i inspiraciju koja te drži na pravom putu.",
+      },
+    ],
+  },
+  privacy: {
+    title: "Politika privatnosti",
+    intro:
+      "Kratko i jasno: ovaj sajt meri kako se koristi, da bih znala koji tekstovi ti pomažu. Ne prodajem podatke i nema reklama.",
+    sections: [
+      {
+        title: "Šta koristim",
+        body: [
+          "Google Analytics 4 — broji posete i pokazuje koje stranice se čitaju. Dok ne prihvatiš kolačiće, radi u režimu bez kolačića (Google Consent Mode) i ne pamti te.",
+          "Microsoft Clarity — anonimne mape klikova i snimci kretanja po stranici, da vidim šta je nejasno. Učitava se tek kad prihvatiš kolačiće.",
+          "Forma za zakazivanje — ime, prezime, email i telefon koje upišeš čuvaju se u mojoj Google tabeli, a termin biraš u Cal.com kalendaru. Koristim ih samo da se dogovorimo oko časa.",
+        ],
+      },
+      {
+        title: "Tvoj izbor",
+        body: [
+          "Izbor kolačića možeš da promeniš kad god hoćeš preko linka „Podešavanja kolačića“ u dnu svake stranice.",
+          "Ako želiš da obrišem podatke iz forme, samo mi piši i uradiću to.",
+        ],
+      },
+    ],
+  },
+  notFound: {
+    title: "Ova stranica ne postoji",
+    text: "Možda je link star, a možda smo se samo malo izgubili u uličicama.",
+    back: "Na početnu",
+  },
+};
+
+export type Dictionary = typeof sr;
+export default sr;

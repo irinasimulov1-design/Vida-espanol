@@ -1,39 +1,203 @@
 @import "tailwindcss";
 
+/* VIDA · a la española — brend tokeni (izvor: vida-brending.md)
+   70% neutralno (blanco, hormigon, negro) · 30% boja, jedna boja po sekciji.
+   Tinto je SAMO za CTA dugmad. Narandža, rojo i tinto nikad jedna do druge.
+   Na naranja/rojo/tinto/verde tekst je blanco; na oro/mostaza tekst je negro. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-blanco);
+  --foreground: var(--color-negro);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-dm-sans);
+
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-script: var(--font-mrs-saint-delafield), cursive;
+  --font-poster: var(--font-abril-fatface), Georgia, serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-dm-sans), Arial, Helvetica, sans-serif;
+@theme {
+  /* neutralne */
+  --color-blanco: #F5F2EC;
+  --color-hormigon: #D6D3CD;
+  --color-negro: #2B2B2B;
+
+  /* boje */
+  --color-naranja: #E07B39;
+  --color-rojo: #B3262E;
+  --color-tinto: #6B1F28;
+  --color-verde: #2F5D4A;
+  --color-mostaza: #C9A13B;
+  --color-oro: #E8C88A;
+
+  /* pomoćne */
+  --color-papel: #FBF8F2;
+  --color-linija: #E3DED5;
+
+  /* senka samo za „papirne“ predmete (razglednica, karta, poster) */
+  --shadow-papel: 0 10px 26px rgba(0, 0, 0, 0.1);
+
+  /* dubina za zaglavlje bloga (verde + sunce): senka sunca, senčenje ivica, senka teksta */
+  --shadow-sunce: 0 24px 60px rgba(0, 0, 0, 0.3);
+  --inset-shadow-sunce: inset -36px -44px 70px rgba(107, 31, 40, 0.35), inset 24px 28px 50px rgba(255, 255, 255, 0.14);
+  --inset-shadow-sekcija: inset 0 18px 36px -18px rgba(0, 0, 0, 0.35), inset 0 -28px 48px -24px rgba(0, 0, 0, 0.4);
+  /* svetle sekcije (hormigon): samo nagoveštaj senke sa gornje ivice */
+  --inset-shadow-sekcija-svetla: inset 0 16px 32px -20px rgba(0, 0, 0, 0.14);
+  /* fotka „podignuta“ sa podloge */
+  --shadow-fotka: 0 28px 60px -12px rgba(0, 0, 0, 0.45);
+  --text-shadow-dubina: 0 2px 14px rgba(0, 0, 0, 0.3);
+  --text-shadow-dubina-sm: 0 1px 6px rgba(0, 0, 0, 0.25);
+}
+
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    line-height: 1.08;
+  }
+
+  h2 {
+    font-size: 2rem;
+    line-height: 1.15;
+  }
+
+  h3 {
+    font-size: 1.375rem;
+    line-height: 1.2;
+    font-style: italic;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  @media (width >= 48rem) {
+    body {
+      font-size: 1.125rem;
+    }
+
+    h1 {
+      font-size: 4rem;
+    }
+
+    h2 {
+      font-size: 2.75rem;
+    }
+
+    h3 {
+      font-size: 1.625rem;
+    }
+  }
+}
+
+@layer components {
+  /* Oznaka / eyebrow: PALABRA DEL DÍA · AHORA ABIERTO */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.4;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+
+  /* CTA dugme: tinto je jedini „glasni“ element na strani */
+  .btn {
+    display: inline-block;
+    background: var(--color-tinto);
+    color: var(--color-blanco);
+    font: 400 13px/1 var(--font-sans);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 16px 28px;
+    border: 0;
+    border-radius: 0;
+    transition: background-color 150ms, color 150ms, border-color 150ms;
+  }
+
+  .btn:hover {
+    background: var(--color-negro);
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-negro);
+    border: 1px solid var(--color-negro);
+  }
+
+  .btn-ghost:hover {
+    background: var(--color-negro);
+    color: var(--color-blanco);
+  }
+
+  /* Ghost dugme na tamnoj pozadini (hero preko videa) */
+  .btn-ghost-light {
+    color: var(--color-blanco);
+    border-color: var(--color-blanco);
+  }
+
+  .btn-ghost-light:hover {
+    background: var(--color-blanco);
+    color: var(--color-negro);
+  }
+
+  /* Link u tekstu: negro sa tankom narandžastom linijom */
+  .link {
+    text-decoration: underline;
+    text-decoration-color: var(--color-naranja);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: text-decoration-color 150ms;
+  }
+
+  .link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /* Tretman fotki: topao filmski ton */
+  .photo {
+    filter: saturate(0.92) sepia(0.08) contrast(0.97);
+    border-radius: 0;
+    object-fit: cover;
+  }
 }
 
 .prose h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 2rem;
+  font-size: 2rem;
+  margin-top: 2.5rem;
   margin-bottom: 0.75rem;
 }
 
 .prose h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-top: 1.5rem;
+  font-size: 1.5rem;
+  margin-top: 1.75rem;
   margin-bottom: 0.5rem;
 }
 
 .prose p {
   margin-bottom: 1rem;
-  line-height: 1.75;
 }
 
 .prose ul,
@@ -42,27 +206,50 @@ body {
   padding-left: 1.5rem;
 }
 
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
 .prose li {
   margin-bottom: 0.25rem;
 }
 
+.prose li::marker {
+  color: var(--color-naranja);
+}
+
 .prose a {
-  color: #2563eb;
   text-decoration: underline;
+  text-decoration-color: var(--color-naranja);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.prose a:hover {
+  text-decoration-color: currentColor;
+}
+
+.prose strong {
+  font-weight: 500;
 }
 
 .prose blockquote {
-  border-left: 3px solid #d4d4d8;
+  border-left: 1px solid var(--color-negro);
   padding-left: 1rem;
-  color: #71717a;
+  font-family: var(--font-display);
   font-style: italic;
+  font-size: 1.35rem;
   margin-bottom: 1rem;
 }
 
 .prose pre {
-  background: #f4f4f5;
+  background: var(--color-papel);
+  border: 1px solid var(--color-linija);
   padding: 1rem;
-  border-radius: 0.5rem;
   overflow-x: auto;
   margin-bottom: 1rem;
 }
@@ -70,3 +257,28 @@ body {
 .prose code {
   font-size: 0.9em;
 }
+
+.prose img {
+  filter: saturate(0.92) sepia(0.08) contrast(0.97);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--color-linija);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.prose th {
+  background: var(--color-papel);
+  font-weight: 500;
+}
+
+summary::-webkit-details-marker { display: none; }
+summary::marker { content: ""; }

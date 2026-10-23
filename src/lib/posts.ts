@@ -3,72 +3,81 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
+import type { Locale } from "@/i18n/config";
 
-const postsDirectory = path.join(process.cwd(), "content", "posts");
+// Postovi po jeziku: content/posts/sr/*.md i content/posts/en/*.md.
+// Fajlovi koji počinju sa "_" (npr. _sablon.md) se preskaču.
+const postsRoot = path.join(process.cwd(), "content", "posts");
+
+export interface FaqItem {
+  pitanje: string;
+  odgovor: string;
+}
 
 export interface Post {
+  lang: Locale;
   slug: string;
   title: string;
   date: string;
+  updated: string;
   excerpt: string;
   coverImage: string;
   categories: string[];
+  /** Slug iste teme na drugom jeziku, ako prevod postoji. */
+  prevod: string;
+  /** Kratak, direktan odgovor na vrhu posta (GEO: AI najčešće citira baš ovo). */
+  ukratko: string;
+  faq: FaqItem[];
 }
 
 export interface PostWithContent extends Post {
+  markdown: string;
   contentHtml: string;
 }
 
-export function getAllPosts(): Post[] {
-  const fileNames = fs.readdirSync(postsDirectory);
-
-  const posts = fileNames
-    .filter((fileName) => fileName.endsWith(".md"))
-    .map((fileName) => {
-      const slug = fileName.replace(/\.md$/, "");
-      const fullPath = path.join(postsDirectory, fileName);
-      const fileContents = fs.readFileSync(fullPath, "utf8");
-      const { data } = matter(fileContents);
-
-      return {
-        slug,
-        title: data.title,
-        date: data.date,
-        excerpt: data.excerpt,
-        coverImage: data.coverImage ?? "",
-        categories: data.categories ?? [],
-      };
-    });
-
-  return posts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+function postFiles(lang: Locale): string[] {
+  const dir = path.join(postsRoot, lang);
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir)
+    .filter((fileName) => fileName.endsWith(".md") && !fileName.startsWith("_"));
 }
 
-export function getAllSlugs(): string[] {
-  const fileNames = fs.readdirSync(postsDirectory);
-  return fileNames
-    .filter((fileName) => fileName.endsWith(".md"))
-    .map((fileName) => fileName.replace(/\.md$/, ""));
-}
-
-export async function getPostBySlug(
-  slug: string
-): Promise<PostWithContent> {
-  const fullPath = path.join(postsDirectory, `${slug}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
+function readPost(lang: Locale, slug: string): { post: Post; markdown: string } {
+  const fileContents = fs.readFileSync(path.join(postsRoot, lang, `${slug}.md`), "utf8");
   const { data, content } = matter(fileContents);
 
-  const processedContent = await remark().use(html).process(content);
-  const contentHtml = processedContent.toString();
-
   return {
-    slug,
-    title: data.title,
-    date: data.date,
-    excerpt: data.excerpt,
-    coverImage: data.coverImage ?? "",
-    categories: data.categories ?? [],
-    contentHtml,
+    post: {
+      lang,
+      slug,
+      title: data.title,
+      date: data.date,
+      updated: data.updated ?? "",
+      excerpt: data.excerpt,
+      coverImage: data.coverImage ?? "",
+      categories: data.categories ?? [],
+      prevod: data.prevod ?? "",
+      ukratko: data.ukratko ?? "",
+      faq: data.faq ?? [],
+    },
+    markdown: content.trim(),
   };
+}
+
+export function getAllSlugs(lang: Locale): string[] {
+  return postFiles(lang).map((fileName) => fileName.replace(/\.md$/, ""));
+}
+
+export function getAllPosts(lang: Locale): Post[] {
+  return getAllSlugs(lang)
+    .map((slug) => readPost(lang, slug).post)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+export async function getPostBySlug(lang: Locale, slug: string): Promise<PostWithContent> {
+  const { post, markdown } = readPost(lang, slug);
+  const processedContent = await remark().use(html).process(markdown);
+
+  return { ...post, markdown, contentHtml: processedContent.toString() };
 }
