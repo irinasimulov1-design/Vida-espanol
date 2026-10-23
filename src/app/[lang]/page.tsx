@@ -27,53 +27,53 @@ export default async function Home(props: PageProps<"/[lang]">) {
     <>
       {/* Hero Section */}
       <section className="relative flex min-h-[calc(100svh-4.5rem)] items-center overflow-hidden">
-        {/* Video Background */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 h-full w-full object-cover"
-        >
-          <source src="/14388911-uhd_3840_2160_60fps.mp4" type="video/mp4" />
-        </video>
+        {/* Pozadina: prozori iz Andaluzije, utišani ka paleti (manje zasićeno, topliji ton) */}
+        <Image
+          src="/hero-andaluzija-prozori.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          priority
+          className="object-cover [filter:saturate(0.55)_sepia(0.18)_brightness(0.92)_contrast(0.95)]"
+        />
 
-        {/* Warm overlay */}
-        <div className="absolute inset-0 bg-braon/60" />
+        {/* Overlay da beli tekst bude čitljiv */}
+        <div className="absolute inset-0 bg-negro/55" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 inset-shadow-sekcija" />
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-24 md:px-8">
+        <div className="relative z-10 mx-auto w-full max-w-300 px-4 py-24 md:px-8">
           <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-between">
             {/* Left content */}
             <div className="max-w-xl">
-              <p className="font-serif text-xl italic text-zlatna">{t.hero.motto}</p>
+              <p className="eyebrow text-oro text-shadow-dubina-sm">{t.hero.motto}</p>
 
-              <h1 className="mt-4 text-4xl font-semibold leading-tight text-cloud sm:text-5xl lg:text-6xl">
+              <h1 className="mt-4 text-blanco text-shadow-dubina">
                 {t.hero.titleLine1}
                 <br />
                 {t.hero.titleLine2}
               </h1>
 
-              <p className="mt-6 text-lg leading-relaxed text-cloud/85">{t.hero.text}</p>
+              <p className="mt-6 text-blanco/85 text-shadow-dubina-sm">{t.hero.text}</p>
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link
                   href={href("blog", lang)}
-                  className="rounded-full bg-bordo px-7 py-3 text-sm font-semibold text-cloud transition hover:brightness-110"
+                  className="btn"
                 >
                   {t.hero.ctaBlog}
                 </Link>
                 <Link
                   href="#zakazi-cas"
-                  className="rounded-full border border-cloud/40 px-7 py-3 text-sm font-semibold text-cloud transition-colors hover:bg-cloud/10"
+                  className="btn btn-ghost btn-ghost-light"
                 >
                   {t.hero.ctaBook}
                 </Link>
               </div>
 
-              <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 text-sm text-cloud/80">
+              <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 text-sm text-blanco/80 text-shadow-dubina-sm">
                 {t.hero.highlights.map((item) => (
                   <div key={item} className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-zlatna" />
+                    <span className="h-2 w-2 rounded-full bg-oro" />
                     {item}
                   </div>
                 ))}
@@ -82,8 +82,8 @@ export default async function Home(props: PageProps<"/[lang]">) {
 
             {/* Right — Teacher image with decorative shapes */}
             <div className="relative hidden lg:block">
-              <div className="absolute -top-16 -right-16 h-80 w-80 rounded-full bg-terracotta/40 blur-sm" />
-              <div className="absolute -bottom-12 -left-12 h-60 w-60 rounded-full bg-zlatna/30 blur-sm" />
+              <div className="absolute -top-16 -right-16 h-80 w-80 rounded-full bg-naranja/40" />
+              <div className="absolute -bottom-12 -left-12 h-60 w-60 rounded-full bg-oro/30" />
 
               <div className="relative z-10">
                 <Image
@@ -91,13 +91,13 @@ export default async function Home(props: PageProps<"/[lang]">) {
                   alt={t.hero.imageAlt}
                   width={480}
                   height={600}
-                  className="h-135 w-105 rounded-3xl object-cover object-top shadow-2xl"
+                  className="photo h-135 w-105 object-top shadow-fotka"
                   priority
                 />
 
-                <div className="absolute bottom-6 left-6 rounded-xl bg-cloud/95 px-5 py-3 shadow-lg backdrop-blur-sm">
-                  <p className="font-serif text-base font-semibold text-braon">Irina Stojanović</p>
-                  <p className="text-xs text-braon/70">{t.hero.nameCardRole}</p>
+                <div className="absolute bottom-6 left-6 bg-papel px-5 py-3 shadow-papel">
+                  <p className="font-display text-lg font-medium italic text-negro">Irina Stojanović</p>
+                  <p className="text-xs text-negro/70">{t.hero.nameCardRole}</p>
                 </div>
               </div>
             </div>
@@ -106,19 +106,19 @@ export default async function Home(props: PageProps<"/[lang]">) {
       </section>
 
       {/* Latest posts */}
-      <section className="py-20">
-        <div className="mx-auto max-w-7xl px-4 md:px-8">
+      <section className="py-18 md:py-30">
+        <div className="mx-auto max-w-300 px-4 md:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="font-serif text-lg italic text-terracotta">{t.home.blogEyebrow}</p>
-              <h2 className="mt-1 text-3xl font-semibold text-braon md:text-4xl">
+              <p className="eyebrow">{t.home.blogEyebrow}</p>
+              <h2 className="mt-1 text-negro">
                 {t.home.blogTitle}
               </h2>
-              <p className="mt-2 text-braon/70">{t.home.blogText}</p>
+              <p className="mt-2 text-negro/70">{t.home.blogText}</p>
             </div>
             <Link
               href={href("blog", lang)}
-              className="text-sm font-semibold text-terracotta hover:underline"
+              className="text-sm link"
             >
               {t.home.allPosts}
             </Link>
@@ -128,7 +128,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
               <PostCard key={post.slug} post={post} />
             ))}
           </div>
-          {posts.length === 0 && <p className="mt-10 text-braon/60">{t.home.empty}</p>}
+          {posts.length === 0 && <p className="mt-10 text-negro/60">{t.home.empty}</p>}
         </div>
       </section>
 

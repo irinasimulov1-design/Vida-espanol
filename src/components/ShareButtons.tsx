@@ -23,7 +23,7 @@ const SITES = [
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
       </svg>
     ),
-    color: "hover:text-braon",
+    color: "hover:text-negro",
   },
   {
     name: "LinkedIn",
@@ -49,7 +49,7 @@ export default function ShareButtons({
 }) {
   return (
     <div className="flex items-center gap-4">
-      <span className="text-sm font-medium text-braon/70">{label}</span>
+      <span className="text-sm font-medium text-negro/70">{label}</span>
       {SITES.map((site) => (
         <a
           key={site.name}
@@ -62,7 +62,7 @@ export default function ShareButtons({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${shareOn} ${site.name}`}
-          className={`text-terracotta transition-colors ${site.color}`}
+          className={`text-naranja transition-colors ${site.color}`}
         >
           {site.icon}
         </a>

@@ -63,8 +63,10 @@ const sr = {
   social: {
     title: "Pronađi me i na",
     instagram: "Instagram",
+    youtube: "YouTube",
     linkedin: "LinkedIn",
     preply: "Preply",
+    soon: "uskoro",
   },
   booking: {
     eyebrow: "¿Hablamos?",

@@ -65,8 +65,10 @@ const en: Dictionary = {
   social: {
     title: "Find me on",
     instagram: "Instagram",
+    youtube: "YouTube",
     linkedin: "LinkedIn",
     preply: "Preply",
+    soon: "coming soon",
   },
   booking: {
     eyebrow: "¿Hablamos?",

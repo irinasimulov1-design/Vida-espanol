@@ -8,7 +8,7 @@ import { track } from "@/lib/track";
 
 // Preuzeto iz "prodajna stranica": podaci idu u Google Sheet, termin se bira u Cal.com kalendaru.
 const inputClass =
-  "w-full rounded-lg border border-bez bg-white px-4 py-3 text-braon placeholder:text-braon/40 transition focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/40";
+  "w-full border-0 border-b border-negro/30 bg-transparent px-0 py-3 text-negro placeholder:text-negro/40 transition-colors focus:border-negro focus:outline-none";
 
 export default function Booking({ t }: { t: Dictionary["booking"] }) {
   const [firstName, setFirstName] = useState("");
@@ -79,26 +79,26 @@ export default function Booking({ t }: { t: Dictionary["booking"] }) {
   ];
 
   return (
-    <section id="zakazi-cas" className="scroll-mt-20 bg-bez py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <p className="text-center font-serif text-lg italic text-terracotta">{t.eyebrow}</p>
-        <h2 className="mt-2 text-center text-3xl font-semibold text-braon md:text-4xl">
+    <section id="zakazi-cas" className="scroll-mt-20 bg-hormigon py-18 inset-shadow-sekcija-svetla md:py-30">
+      <div className="mx-auto max-w-300 px-4 md:px-8">
+        <p className="text-center eyebrow">{t.eyebrow}</p>
+        <h2 className="mt-2 text-center text-negro">
           {t.title}
         </h2>
-        <p className="mx-auto mt-4 mb-12 max-w-2xl text-center text-lg text-braon/75">
+        <p className="mx-auto mt-4 mb-12 max-w-2xl text-center text-negro/75">
           {t.text}
         </p>
 
-        <div className="mx-auto max-w-md rounded-2xl bg-cloud p-8 shadow-sm">
+        <div className="mx-auto max-w-md border border-linija bg-papel p-8 shadow-papel">
           {!submitted ? (
             <form onSubmit={handleSubmit} className="space-y-4">
               {fields.map((field) => (
                 <div key={field.id}>
                   <label
                     htmlFor={`booking-${field.id}`}
-                    className="mb-1 block text-sm font-medium text-braon"
+                    className="mb-1 block text-sm font-medium text-negro"
                   >
-                    {field.label} <span className="text-terracotta">*</span>
+                    {field.label} <span className="text-naranja">*</span>
                   </label>
                   <input
                     id={`booking-${field.id}`}
@@ -115,30 +115,30 @@ export default function Booking({ t }: { t: Dictionary["booking"] }) {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-2 w-full rounded-full bg-bordo py-3 font-semibold text-cloud transition hover:brightness-110 disabled:opacity-60"
+                className="mt-2 btn w-full"
               >
                 {loading ? t.sending : t.submit}
               </button>
             </form>
           ) : (
             <div className="py-4 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-zlatna/40">
-                <span className="text-3xl text-terracotta">✓</span>
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-oro">
+                <span className="text-3xl text-negro">✓</span>
               </div>
-              <h3 className="mb-2 text-xl font-semibold text-braon">
+              <h3 className="mb-2 text-negro">
                 {t.thanks.replace("{ime}", firstName)}
               </h3>
-              <p className="mb-4 text-sm text-braon/75">{t.saved}</p>
-              <p className="mb-6 text-sm text-braon/75">{t.notOpened}</p>
+              <p className="mb-4 text-sm text-negro/75">{t.saved}</p>
+              <p className="mb-6 text-sm text-negro/75">{t.notOpened}</p>
               <button
                 onClick={openCalendar}
-                className="w-full rounded-full bg-bordo py-3 font-semibold text-cloud transition hover:brightness-110"
+                className="btn w-full"
               >
                 {t.openCalendar}
               </button>
               <button
                 onClick={handleReset}
-                className="mt-4 text-sm font-medium text-terracotta hover:underline"
+                className="mt-4 text-sm link"
               >
                 {t.again}
               </button>

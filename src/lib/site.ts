@@ -25,7 +25,9 @@ export const site = {
   indexNowKey: "5f0c8e3a9b2d4c71a6e8f3b1d2c4a9e7",
 
   social: {
+    // Prazno polje = ikonica se prikazuje kao neaktivna („uskoro“) dok se ne upiše link.
     instagram: "https://instagram.com/vida.alaespanola",
+    youtube: "", // npr. "https://www.youtube.com/@vida.alaespanola"
     preply: "", // npr. "https://preply.com/en/tutor/123456"
     linkedin: "", // npr. "https://www.linkedin.com/in/irina-stojanovic"
   },

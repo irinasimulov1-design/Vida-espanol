@@ -18,8 +18,8 @@ export default function GlobalNotFound() {
       <body className="min-h-full">
         <main className="flex min-h-screen flex-col items-center justify-center gap-10 px-6 text-center">
           <Link href="/" className="leading-none">
-            <span className="block font-serif text-3xl font-bold tracking-[0.12em] text-braon">VIDA</span>
-            <span className="mt-1 block font-serif text-base italic text-terracotta">a la española</span>
+            <span className="block font-display text-3xl font-medium tracking-[0.12em] text-negro">VIDA</span>
+            <span className="mt-1 block font-display text-base italic text-naranja">a la española</span>
           </Link>
           <div className="grid gap-10 sm:grid-cols-2 sm:gap-16">
             {[
@@ -27,11 +27,11 @@ export default function GlobalNotFound() {
               { lang: "en", t: en.notFound },
             ].map(({ lang, t }) => (
               <div key={lang} lang={lang} className="max-w-xs">
-                <h1 className="text-2xl font-semibold text-braon">{t.title}</h1>
-                <p className="mt-3 text-braon/75">{t.text}</p>
+                <h1 className="text-3xl text-negro">{t.title}</h1>
+                <p className="mt-3 text-negro/75">{t.text}</p>
                 <Link
                   href={`/${lang}`}
-                  className="mt-5 inline-block rounded-full bg-bordo px-6 py-2.5 text-sm font-semibold text-cloud transition hover:brightness-110"
+                  className="mt-5 btn"
                 >
                   {t.back}
                 </Link>

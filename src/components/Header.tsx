@@ -13,15 +13,15 @@ export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"]
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-bez bg-cloud/95 backdrop-blur-sm">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-8">
+    <header className="sticky top-0 z-50 w-full border-b border-linija bg-blanco/95 backdrop-blur-sm">
+      <nav className="mx-auto flex max-w-300 items-center justify-between gap-3 px-4 py-3 md:px-8">
         <Logo lang={lang} />
         <ul className="flex items-center gap-3 text-sm font-medium sm:gap-6">
           {navLinks.map((link) => (
             <li key={link.href} className={link.className}>
               <Link
                 href={link.href}
-                className="text-braon transition-colors hover:text-terracotta"
+                className="text-negro decoration-naranja underline-offset-4 hover:underline"
               >
                 {link.label}
               </Link>
@@ -33,7 +33,7 @@ export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"]
           <li>
             <Link
               href={bookingHref(lang)}
-              className="whitespace-nowrap rounded-full bg-bordo px-4 py-2 text-cloud transition hover:brightness-110 sm:px-5"
+              className="whitespace-nowrap btn"
             >
               {t.book}
             </Link>

@@ -52,21 +52,20 @@ export default async function BlogPost(props: PageProps<"/[lang]/blog/[slug]">) 
     <main className="pb-20">
       <PostJsonLd post={post} t={t} />
       {post.coverImage && (
-        <section className="relative h-[66vh] w-full">
-          <Image src={post.coverImage} alt={post.title} fill className="object-cover" priority />
-          <div className="absolute inset-0 bg-braon/55" />
+        <section className="relative h-[66vh] w-full bg-verde">
+          <Image src={post.coverImage} alt={post.title} fill className="photo" priority />
+          <div className="absolute inset-0 bg-negro/55" />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 inset-shadow-sekcija" />
           <div className="absolute inset-0 flex flex-col items-center justify-center px-6">
-            <h1 className="max-w-3xl text-center text-4xl font-semibold text-cloud md:text-5xl">
+            <h1 className="max-w-3xl text-center text-blanco text-shadow-dubina">
               {post.title}
             </h1>
             {post.categories.length > 0 && (
               <div className="mt-5 flex flex-wrap justify-center gap-2">
-                {post.categories.map((cat, i) => (
+                {post.categories.map((cat) => (
                   <span
                     key={cat}
-                    className={`rounded-full px-4 py-1 text-sm font-medium text-cloud backdrop-blur-sm ${
-                      ["bg-terracotta/60", "bg-zlatna/50", "bg-cloud/25"][i % 3]
-                    }`}
+                    className="eyebrow bg-oro px-3 py-1 text-negro"
                   >
                     {cat}
                   </span>
@@ -76,11 +75,11 @@ export default async function BlogPost(props: PageProps<"/[lang]/blog/[slug]">) 
           </div>
         </section>
       )}
-      <article className="mx-auto max-w-3xl px-6 pt-10">
+      <article className="mx-auto max-w-152 px-6 pt-10">
         {!post.coverImage && (
-          <h1 className="text-4xl font-semibold text-braon">{post.title}</h1>
+          <h1 className="text-negro">{post.title}</h1>
         )}
-        <p className="mt-3 flex flex-wrap gap-x-3 text-sm text-braon/60">
+        <p className="mt-3 flex flex-wrap gap-x-3 text-sm text-negro/60">
           <time dateTime={post.date}>{formatDate(post.date, post.lang)}</time>
           {post.updated && post.updated !== post.date && (
             <span>
@@ -91,11 +90,11 @@ export default async function BlogPost(props: PageProps<"/[lang]/blog/[slug]">) 
         </p>
 
         {post.ukratko && (
-          <aside className="mt-8 rounded-2xl border-l-4 border-zlatna bg-bez/60 px-6 py-5">
-            <p className="text-xs font-semibold uppercase tracking-wider text-terracotta">
+          <aside className="mt-8 bg-oro/35 px-6 py-5">
+            <p className="eyebrow">
               {t.post.summary}
             </p>
-            <p className="mt-2 leading-relaxed text-braon">{post.ukratko}</p>
+            <p className="mt-2 leading-relaxed text-negro">{post.ukratko}</p>
           </aside>
         )}
 
@@ -103,15 +102,15 @@ export default async function BlogPost(props: PageProps<"/[lang]/blog/[slug]">) 
 
         {post.faq.length > 0 && (
           <section className="mt-12">
-            <h2 className="text-2xl font-semibold text-braon md:text-3xl">{t.post.faqTitle}</h2>
-            <div className="mt-6 divide-y divide-bez border-y border-bez">
+            <h2 className="text-negro">{t.post.faqTitle}</h2>
+            <div className="mt-6 divide-y divide-linija border-y border-linija">
               {post.faq.map((item) => (
                 <details key={item.pitanje} className="group py-4">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-braon">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-negro">
                     {item.pitanje}
-                    <span className="text-terracotta transition-transform group-open:rotate-45">+</span>
+                    <span className="text-naranja transition-transform group-open:rotate-45">+</span>
                   </summary>
-                  <p className="mt-3 leading-relaxed text-braon/80">{item.odgovor}</p>
+                  <p className="mt-3 leading-relaxed text-negro/80">{item.odgovor}</p>
                 </details>
               ))}
             </div>
@@ -123,25 +122,25 @@ export default async function BlogPost(props: PageProps<"/[lang]/blog/[slug]">) 
         </div>
       </article>
 
-      <aside className="mx-auto mt-12 max-w-3xl px-6">
-        <div className="rounded-2xl bg-bez px-8 py-10 text-center">
-          <p className="font-serif text-lg italic text-terracotta">{t.post.ctaEyebrow}</p>
-          <h2 className="mt-1 text-2xl font-semibold text-braon md:text-3xl">{t.post.ctaTitle}</h2>
-          <p className="mx-auto mt-3 max-w-md text-braon/75">{t.post.ctaText}</p>
+      <aside className="mx-auto mt-12 max-w-152 px-6">
+        <div className="bg-verde px-8 py-12 text-center inset-shadow-sekcija">
+          <p className="eyebrow text-oro text-shadow-dubina-sm">{t.post.ctaEyebrow}</p>
+          <h2 className="mt-3 text-blanco text-shadow-dubina">{t.post.ctaTitle}</h2>
+          <p className="mx-auto mt-3 max-w-md text-blanco/80">{t.post.ctaText}</p>
           <TrackLink
             href={bookingHref(post.lang)}
             event="cta_zakazi_cas"
             params={{ izvor: "post", post: post.slug }}
-            className="mt-6 inline-block rounded-full bg-bordo px-7 py-3 text-sm font-semibold text-cloud transition hover:brightness-110"
+            className="mt-6 btn"
           >
             {t.post.ctaButton}
           </TrackLink>
         </div>
       </aside>
 
-      <div className="mx-auto mt-16 flex max-w-3xl flex-col items-center gap-6 border-t border-bez px-6 pt-8">
+      <div className="mx-auto mt-16 flex max-w-152 flex-col items-center gap-6 border-t border-linija px-6 pt-8">
         <ShareButtons title={post.title} label={t.post.share} shareOn={t.post.shareOn} />
-        <Link href={href("blog", post.lang)} className="text-sm text-terracotta hover:underline">
+        <Link href={href("blog", post.lang)} className="text-sm link">
           {t.post.back}
         </Link>
       </div>

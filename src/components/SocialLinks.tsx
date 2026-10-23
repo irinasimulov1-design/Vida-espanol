@@ -20,6 +20,14 @@ function LinkedInIcon() {
   );
 }
 
+function YouTubeIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+    </svg>
+  );
+}
+
 // Neutralan znak (oblačić sa „P“), ne Preply-jev zaštićeni logotip.
 function PreplyIcon() {
   return (
@@ -29,30 +37,33 @@ function PreplyIcon() {
   );
 }
 
-const profiles: { key: keyof typeof site.social; icon: ReactNode }[] = [
+type Profile = keyof typeof site.social;
+
+const profiles: { key: Profile; icon: ReactNode }[] = [
   { key: "instagram", icon: <InstagramIcon /> },
+  { key: "youtube", icon: <YouTubeIcon /> },
   { key: "linkedin", icon: <LinkedInIcon /> },
   { key: "preply", icon: <PreplyIcon /> },
 ];
 
-/** Linkovi ka profilima; profil bez URL-a u site.ts se ne prikazuje. */
+/** Linkovi ka profilima; profil bez URL-a u site.ts je neaktivna ikonica („uskoro“). */
 export default function SocialLinks({
   labels,
   variant = "dark",
 }: {
-  labels: Record<"instagram" | "linkedin" | "preply", string>;
+  labels: Record<Profile | "soon", string>;
   variant?: "dark" | "light";
 }) {
   const style =
     variant === "dark"
-      ? "bg-cloud/10 text-cloud/80 hover:bg-terracotta hover:text-cloud"
-      : "bg-bez text-terracotta hover:bg-terracotta hover:text-cloud";
+      ? "bg-blanco/10 text-blanco/80 hover:bg-oro hover:text-negro"
+      : "bg-hormigon text-negro hover:bg-negro hover:text-blanco";
+  const placeholderStyle = variant === "dark" ? "bg-blanco/10 text-blanco" : "bg-hormigon text-negro";
 
   return (
     <div className="flex gap-3">
-      {profiles
-        .filter(({ key }) => site.social[key])
-        .map(({ key, icon }) => (
+      {profiles.map(({ key, icon }) =>
+        site.social[key] ? (
           <a
             key={key}
             href={site.social[key]}
@@ -65,7 +76,18 @@ export default function SocialLinks({
           >
             {icon}
           </a>
-        ))}
+        ) : (
+          <span
+            key={key}
+            role="img"
+            aria-label={`${labels[key]} (${labels.soon})`}
+            title={`${labels[key]} (${labels.soon})`}
+            className={`flex h-10 w-10 cursor-default items-center justify-center rounded-full opacity-40 ${placeholderStyle}`}
+          >
+            {icon}
+          </span>
+        ),
+      )}
     </div>
   );
 }

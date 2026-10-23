@@ -5,15 +5,15 @@ export default function Logo({ lang, light = false }: { lang: Locale; light?: bo
   return (
     <Link href={`/${lang}`} className="flex flex-col leading-none" aria-label="VIDA — a la española">
       <span
-        className={`font-serif text-2xl font-bold tracking-[0.12em] ${
-          light ? "text-cloud" : "text-braon"
+        className={`font-display text-2xl font-medium tracking-[0.12em] ${
+          light ? "text-blanco" : "text-negro"
         }`}
       >
         VIDA
       </span>
       <span
-        className={`mt-1 font-serif text-sm italic ${
-          light ? "text-zlatna" : "text-terracotta"
+        className={`mt-1 font-display text-sm italic ${
+          light ? "text-oro" : "text-naranja"
         }`}
       >
         a la española

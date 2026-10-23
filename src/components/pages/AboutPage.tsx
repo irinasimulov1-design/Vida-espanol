@@ -31,16 +31,16 @@ export default function AboutPage({ lang }: { lang: Locale }) {
   return (
     <main>
       {/* Ko je — intro section */}
-      <section className="bg-bez pt-16 pb-20">
+      <section className="bg-hormigon py-18 inset-shadow-sekcija-svetla md:py-30">
         <div className="mx-auto max-w-4xl px-8">
-          <h1 className="text-4xl font-semibold text-braon md:text-5xl">{a.title}</h1>
+          <h1 className="text-negro">{a.title}</h1>
 
-          <div className="mt-10 flex flex-col gap-5 leading-relaxed text-braon/80">
+          <div className="mt-10 flex max-w-140 flex-col gap-5 text-negro/80">
             {a.paragraphs.map((paragraph, i) => (
               <p key={i}>
                 {i === 0 && (
                   <>
-                    <strong className="text-braon">{a.introLabel}</strong>
+                    <strong className="text-negro">{a.introLabel}</strong>
                     <br />
                   </>
                 )}
@@ -54,7 +54,7 @@ export default function AboutPage({ lang }: { lang: Locale }) {
               href={site.social.instagram}
               target="_blank"
               rel="me noopener noreferrer"
-              className="inline-block rounded-full bg-bordo px-6 py-3 text-sm font-semibold text-cloud transition hover:brightness-110"
+              className="btn"
             >
               {a.writeMe}
             </a>
@@ -63,7 +63,7 @@ export default function AboutPage({ lang }: { lang: Locale }) {
                 href={site.social.preply}
                 target="_blank"
                 rel="me noopener noreferrer"
-                className="inline-block rounded-full border border-braon/30 px-6 py-3 text-sm font-semibold text-braon transition-colors hover:bg-cloud"
+                className="btn btn-ghost"
               >
                 {a.preplyCta}
               </a>
@@ -71,7 +71,7 @@ export default function AboutPage({ lang }: { lang: Locale }) {
           </div>
 
           <div className="mt-10">
-            <p className="text-sm font-semibold text-braon">{t.social.title}</p>
+            <p className="eyebrow text-negro">{t.social.title}</p>
             <div className="mt-3">
               <SocialLinks labels={t.social} variant="light" />
             </div>
@@ -80,9 +80,9 @@ export default function AboutPage({ lang }: { lang: Locale }) {
       </section>
 
       {/* Šta je najvažnije — method section */}
-      <section className="py-20">
-        <div className="mx-auto max-w-7xl px-8">
-          <h2 className="text-center text-3xl font-semibold text-braon md:text-4xl">
+      <section className="py-18 md:py-30">
+        <div className="mx-auto max-w-300 px-8">
+          <h2 className="text-center text-negro">
             {a.methodTitle}
           </h2>
 
@@ -93,14 +93,14 @@ export default function AboutPage({ lang }: { lang: Locale }) {
                 alt={a.imageAlt}
                 width={560}
                 height={744}
-                className="w-full max-w-md rounded-2xl object-cover object-top lg:w-140"
+                className="photo w-full max-w-md object-top lg:w-140"
               />
             </div>
 
             <div className="flex flex-col gap-10">
               {a.pillars.map((pillar, i) => (
                 <div key={pillar.title} className="flex gap-5">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-bez text-terracotta">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-hormigon text-naranja">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -117,8 +117,8 @@ export default function AboutPage({ lang }: { lang: Locale }) {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-braon">{pillar.title}</h3>
-                    <p className="mt-2 leading-relaxed text-braon/80">{pillar.text}</p>
+                    <h3 className="text-negro">{pillar.title}</h3>
+                    <p className="mt-2 leading-relaxed text-negro/80">{pillar.text}</p>
                   </div>
                 </div>
               ))}

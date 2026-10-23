@@ -50,8 +50,8 @@ export default function LanguageHint({ lang, hints }: { lang: Locale; hints: Hin
   const isPost = pathname.includes("/blog/");
 
   return (
-    <div lang={suggested} className="border-b border-zlatna/60 bg-zlatna/25">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-2 text-sm text-braon md:px-8">
+    <div lang={suggested} className="border-b border-oro/60 bg-oro/25">
+      <div className="mx-auto flex max-w-300 flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-2 text-sm text-negro md:px-8">
         <p>
           {isPost ? t.post : t.page}{" "}
           <a
@@ -61,7 +61,7 @@ export default function LanguageHint({ lang, hints }: { lang: Locale; hints: Hin
               e.currentTarget.href = alternateUrl(suggested) ?? `/${suggested}`;
               track("promena_jezika", { sa: lang, na: suggested, nacin: "traka" });
             }}
-            className="font-semibold text-terracotta underline-offset-4 hover:underline"
+            className="link"
           >
             {t.link}
           </a>
@@ -77,7 +77,7 @@ export default function LanguageHint({ lang, hints }: { lang: Locale; hints: Hin
             setDismissed(true);
           }}
           aria-label={t.close}
-          className="px-1 text-lg leading-none text-braon/60 hover:text-braon"
+          className="px-1 text-lg leading-none text-negro/60 hover:text-negro"
         >
           ×
         </button>
