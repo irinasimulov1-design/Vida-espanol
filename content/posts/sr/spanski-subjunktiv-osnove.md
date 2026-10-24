@@ -7,9 +7,9 @@ categories: ["Gramatika", "Subjunktiv", "Napredni nivo"]
 prevod: "spanish-subjunctive-basics"
 ---
 
-## Šta je subjunktiv?
+## Šta je subjunktiv? Ovo je test
 
-Subjunktiv (el subjuntivo) je glagolski način koji izražava želje, sumnje, emocije i nerealne situacije. U srpskom jeziku nemamo direktan ekvivalent, što ga čini posebno izazovnim za nas.
+Subjunktiv (el subjuntivo) je glagolski način koji izražava želje, sumnje, emocije i nerealne situacije. U srpskom jeziku nemamo direktan ekvivalent, što ga čini posebno izazovnim za nas. 
 
 Dok indikativ opisuje stvarnost onakvu kakva jeste, subjunktiv opisuje svet onakav kakav bismo želeli da bude, ili situacije koje nisu sigurne.
 
