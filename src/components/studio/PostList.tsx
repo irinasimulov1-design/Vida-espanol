@@ -39,11 +39,14 @@ export default function PostList({
   readOnly,
   error,
   onOpen,
+  onLetter,
 }: {
   posts: LoadedPost[] | null;
   readOnly: boolean;
   error: string;
   onOpen: (target: EditTarget) => void;
+  /** „Pismo“: novo pismo pretplatnicima sa ovim tekstom kao karticom */
+  onLetter?: (post: StudioPost) => void;
 }) {
   const [lang, setLang] = useState<Locale>("sr");
   const mine = (posts ?? [])
@@ -103,7 +106,12 @@ export default function PostList({
                     {post.title || "(bez naslova)"}
                   </span>
                 </button>
-                <div className="text-sm">
+                <div className="flex items-center gap-5 text-sm">
+                  {onLetter && postStatus(post) === "objavljen" && (
+                    <button type="button" className="link" onClick={() => onLetter(post)}>
+                      ✉ Pismo
+                    </button>
+                  )}
                   {pair ? (
                     <button type="button" className="link" onClick={() => onOpen({ post: pair.post, sha: pair.sha })}>
                       {LANG_NAME[pair.post.lang]} verzija →

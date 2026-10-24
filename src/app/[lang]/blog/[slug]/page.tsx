@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllSlugs, getPostBySlug } from "@/lib/posts";
 import PostView from "@/components/PostView";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import { PostJsonLd } from "@/components/JsonLd";
 import { getDictionary } from "@/i18n";
 import { hasLocale, locales, ogLocale, type Locale } from "@/i18n/config";
@@ -48,6 +49,7 @@ export default async function BlogPost(props: PageProps<"/[lang]/blog/[slug]">) 
     <>
       <PostJsonLd post={post} t={t} />
       <PostView post={post} t={t} contentHtml={post.contentHtml} />
+      <NewsletterSignup lang={post.lang} t={t.newsletter} />
     </>
   );
 }

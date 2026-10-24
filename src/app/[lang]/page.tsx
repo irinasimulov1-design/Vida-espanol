@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import Booking from "@/components/Booking";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import Naranja from "@/components/Naranja";
 import { getDictionary } from "@/i18n";
 import { hasLocale, locales, type Locale } from "@/i18n/config";
@@ -78,6 +79,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
         {posts.length === 0 && <p className="mt-10 text-gris">{t.home.empty}</p>}
       </section>
 
+      <NewsletterSignup lang={lang} t={t.newsletter} postcard />
 
       <Booking t={t.booking} />
     </>

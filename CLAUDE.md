@@ -49,10 +49,11 @@ Nije konfigurisan nijedan test framework.
 
 - `Naranja.tsx` (logo), `Logo.tsx` (tipografski, u footeru), `Header.tsx` (crni blokovi + `LanguageSwitcher`, na mobilnom `MobileMenu`), `Footer.tsx` (crn, sa `Tenda.tsx` na vrhu), `LanguageHint.tsx`
 - `PostView.tsx` — izgled posta, deljen između `blog/[slug]` i Studija (slotovi za editabilna polja)
-- `studio/` — Studio: `Studio` (prijava, lista), `Editor` (WYSIWYG preko `PostView`), `RichBody` (Tiptap + markdown), `Fields`, `SeoPanel`; logika u `src/lib/studio/` (`github.ts` commit kroz Git Data API, `markdown.ts` frontmatter, `auth.ts`, `image.ts`, `slug.ts`)
+- `studio/` — Studio: `Studio` (prijava, lista), `Editor` (WYSIWYG preko `PostView`), `RichBody` (Tiptap + markdown), `Fields`, `SeoPanel`; logika u `src/lib/studio/` (`github.ts` commit kroz Git Data API, `markdown.ts` frontmatter, `auth.ts`, `image.ts`, `slug.ts`, `letters.ts`); tab **Pisma** (`studio/newsletter/`: `LetterList`, `LetterEditor`) piše i šalje pisma, šablon mejla je `src/lib/newsletter/template.ts`
+- `NewsletterSignup.tsx` — prijava na pisma (početna i ispod posta), double opt-in preko Workera, lista po jeziku stranice
 - `PostCard.tsx`, `ShareButtons.tsx`, `AuthorBox.tsx`, `SocialLinks.tsx` (Instagram/LinkedIn/Preply; profil bez URL-a se ne prikazuje)
 - `Booking.tsx` — forma za zakazivanje časa (client): podaci u Google Sheet (Apps Script), termin u Cal.com modalu. Preuzeto iz „prodajna stranica“.
-- `Analytics.tsx` (GA4 u Consent Mode v2, Clarity tek posle pristanka), `CookieConsent.tsx` (baner; stanje u `src/lib/consent.ts`), `CookieSettingsLink.tsx`
+- `Analytics.tsx` (GA4 u Consent Mode v2, Clarity tek posle pristanka; oba samo na domenu iz `site.url`, ne na localhostu), `CookieConsent.tsx` (baner; stanje u `src/lib/consent.ts`), `CookieSettingsLink.tsx`
 - `JsonLd.tsx` — schema.org: WebSite + Person (sajt), BlogPosting + Breadcrumb + FAQPage (post)
 - `TrackLink.tsx` — `Link` koji šalje GA događaj; događaji su tipizirani u `src/lib/track.ts`
 
@@ -62,7 +63,7 @@ Nije konfigurisan nijedan test framework.
 - Frontmatter: `title`, `date`, `draft?` (nacrt, ne objavljuje se), `updated?`, `excerpt`, `coverImage`, `categories`, `prevod?` (slug iste teme na drugom jeziku — pravi hreflang par), `ukratko?` (direktan odgovor na vrhu, za GEO), `faq?` (lista `pitanje`/`odgovor` → sekcija + FAQPage schema).
 - Engleske verzije nisu doslovni prevodi: pisane su za strance koji uče španski.
 - Na sajtu su samo objavljeni postovi (`isPublished` u `posts.ts`): bez `draft: true` i bez datuma u budućnosti (zakazani; `deploy.yml` ima jutarnji cron). `prevod` se povezuje samo ako je i par objavljen.
-- Postove piše i menja **VIDA Studio** (`/studio`): commit u granu `site.studio.branch` preko GitHub App prijave; Cloudflare Worker `workers/studio-auth/` (OAuth + AI predlog prevoda). Podešavanje: `docs/studio.md`.
+- Postove piše i menja **VIDA Studio** (`/studio`): commit u granu `site.studio.branch` preko GitHub App prijave; Cloudflare Worker `workers/studio-auth/` (OAuth, AI predlog prevoda, pisma preko Resend-a u `src/newsletter.ts`). Nacrti pisama: `content/pisma/<jezik>/*.md` (ne objavljuju se). Podešavanje: `docs/studio.md`.
 
 ## Hosting, SEO i spoljni servisi
 

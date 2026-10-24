@@ -9,6 +9,9 @@ import { getUser, listMarkdown, publishesToSite, type StudioUser } from "@/lib/s
 import { parsePost, type StudioPost } from "@/lib/studio/markdown";
 import PostList, { type LoadedPost } from "./PostList";
 import Editor from "./Editor";
+import LetterList from "./newsletter/LetterList";
+import LetterEditor, { type LetterTarget } from "./newsletter/LetterEditor";
+import { emptyLetter } from "@/lib/studio/letters";
 
 export interface EditTarget {
   post: StudioPost;
@@ -26,6 +29,8 @@ export default function Studio() {
   const [error, setError] = useState("");
   const [posts, setPosts] = useState<LoadedPost[] | null>(null);
   const [editing, setEditing] = useState<EditTarget | null>(null);
+  const [section, setSection] = useState<"tekstovi" | "pisma">("tekstovi");
+  const [letter, setLetter] = useState<LetterTarget | null>(null);
 
   const start = useCallback(async (token: string) => {
     setError("");
@@ -84,6 +89,22 @@ export default function Studio() {
     }
   }
 
+  if (letter && session) {
+    return (
+      <LetterEditor
+        key={`${letter.letter.lang}/${letter.letter.id}/${letter.sha}`}
+        target={letter}
+        token={session.token}
+        readOnly={session.readOnly}
+        posts={posts ?? []}
+        onClose={() => {
+          setLetter(null);
+          setSection("pisma");
+        }}
+      />
+    );
+  }
+
   if (editing && session) {
     return (
       <Editor
@@ -104,6 +125,21 @@ export default function Studio() {
           <div className="flex items-center gap-4">
             <Logo lang="sr" />
             <span className="eyebrow border-l border-linija pl-4">Studio</span>
+            {session && (
+              <nav className="ml-2 flex gap-4" aria-label="Studio">
+                {(["tekstovi", "pisma"] as const).map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    aria-current={section === s ? "page" : undefined}
+                    onClick={() => setSection(s)}
+                    className={`eyebrow border-b pb-1 ${section === s ? "border-naranja text-negro" : "border-transparent text-gris"}`}
+                  >
+                    {s === "tekstovi" ? "Tekstovi" : "Pisma"}
+                  </button>
+                ))}
+              </nav>
+            )}
           </div>
           {session && (
             <div className="flex items-center gap-4 text-sm">
@@ -130,11 +166,19 @@ export default function Studio() {
         </p>
       )}
 
-      {session ? (
+      {session && section === "pisma" ? (
+        <LetterList token={session.token} readOnly={session.readOnly} onOpen={setLetter} />
+      ) : session ? (
         <PostList
           posts={posts}
           readOnly={session.readOnly}
           onOpen={(target) => setEditing(target)}
+          onLetter={(post) =>
+            setLetter({
+              letter: { ...emptyLetter(post.lang), subject: post.title, preheader: post.excerpt, post: post.slug },
+              sha: null,
+            })
+          }
           error={error}
         />
       ) : (

@@ -2,10 +2,12 @@
 //   GET  /login     → preusmerava na GitHub prijavu (GitHub App)
 //   GET  /callback  → menja kod za token i vraća ga prozoru Studija (postMessage)
 //   POST /translate → AI predlog verzije posta na drugom jeziku (Claude)
+//   /newsletter/*   → pisma preko Resend-a (vidi newsletter.ts)
 // Tajne (GITHUB_CLIENT_SECRET, ANTHROPIC_API_KEY) postoje samo ovde, kao Worker secrets.
 import Anthropic from "@anthropic-ai/sdk";
+import { confirm, studioRoute, subscribe, type NewsletterEnv } from "./newsletter";
 
-interface Env {
+interface Env extends NewsletterEnv {
   GITHUB_CLIENT_ID: string;
   GITHUB_CLIENT_SECRET: string;
   ANTHROPIC_API_KEY: string;
@@ -187,24 +189,41 @@ export default {
     if (request.method === "GET" && pathname === "/login") return login(request, env);
     if (request.method === "GET" && pathname === "/callback") return callback(request, env);
 
-    if (pathname === "/translate") {
-      const origin = allowedOrigin(env, request.headers.get("Origin"));
-      if (!origin) return new Response("Nepoznat sajt.", { status: 403 });
-      if (request.method === "OPTIONS") {
-        return new Response(null, {
-          status: 204,
-          headers: {
-            "Access-Control-Allow-Origin": origin,
-            "Access-Control-Allow-Methods": "POST",
-            "Access-Control-Allow-Headers": "Authorization, Content-Type",
-            "Access-Control-Max-Age": "86400",
-            Vary: "Origin",
-          },
-        });
-      }
-      if (request.method === "POST") return translate(request, env, origin);
+    if (request.method === "GET" && pathname === "/newsletter/confirm") return confirm(request, env);
+
+    // Sve ostalo zovu sajt i Studio iz browsera: samo sa dozvoljenih adresa (CORS).
+    if (pathname !== "/translate" && !pathname.startsWith("/newsletter/")) {
+      return new Response("Not found", { status: 404 });
+    }
+    const origin = allowedOrigin(env, request.headers.get("Origin"));
+    if (!origin) return new Response("Nepoznat sajt.", { status: 403 });
+    const cors = { "Access-Control-Allow-Origin": origin, Vary: "Origin" };
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          ...cors,
+          "Access-Control-Allow-Methods": "GET, POST",
+          "Access-Control-Allow-Headers": "Authorization, Content-Type",
+          "Access-Control-Max-Age": "86400",
+        },
+      });
     }
 
-    return new Response("Not found", { status: 404 });
+    if (request.method === "POST" && pathname === "/newsletter/subscribe") return subscribe(request, env, cors);
+    if (request.method === "POST" && pathname === "/translate") return translate(request, env, origin);
+
+    // Slanje i pregled liste samo za nalog koji sme da menja sajt.
+    const token = request.headers.get("Authorization")?.replace(/^Bearers+/i, "") ?? "";
+    if (!token || !(await canWrite(env, token))) {
+      return new Response(JSON.stringify({ error: "Prijava je istekla. Prijavi se ponovo." }), {
+        status: 401,
+        headers: { ...cors, "Content-Type": "application/json" },
+      });
+    }
+    const res = await studioRoute(request, env, pathname);
+    if (!res) return new Response("Not found", { status: 404, headers: cors });
+    for (const [key, value] of Object.entries(cors)) res.headers.set(key, value);
+    return res;
   },
 } satisfies ExportedHandler<Env>;

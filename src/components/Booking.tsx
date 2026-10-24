@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { getCalApi } from "@calcom/embed-react";
 import type { Dictionary } from "@/i18n";
 import { site } from "@/lib/site";
@@ -78,72 +79,89 @@ export default function Booking({ t }: { t: Dictionary["booking"] }) {
     { id: "phone", label: t.phone, placeholder: t.phonePlaceholder, type: "tel", autoComplete: "tel", value: phone, set: setPhone },
   ];
 
+  // Tekst i forma levo, telefon desno (na mobilnom iznad teksta). Hover na sekciju telefon
+  // blago nagne i podigne, kao da zvoni.
   return (
-    <section id="zakazi-cas" className="scroll-mt-6 bg-blanco py-22 md:py-40">
-      <div className="mx-auto max-w-300 px-5 md:px-8">
-        <p className="text-center eyebrow">{t.eyebrow}</p>
-        <h2 className="mt-6 text-center">
-          {t.title}
-        </h2>
-        <p className="mx-auto mt-6 mb-14 max-w-140 text-center">
-          {t.text}
-        </p>
+    <section id="zakazi-cas" className="group scroll-mt-6 bg-blanco py-22 md:py-40">
+      <div className="mx-auto grid max-w-300 items-center gap-14 px-5 md:grid-cols-2 md:gap-16 md:px-8">
+        <div className="mx-auto w-[70%] max-w-120 md:order-last md:w-full">
+          <Image
+            src="/telefon-crveni.webp"
+            alt={t.phoneAlt}
+            width={960}
+            height={725}
+            loading="lazy"
+            sizes="(min-width: 768px) 480px, 70vw"
+            className="h-auto w-full transition-transform duration-250 ease-[ease] group-hover:-translate-y-1 group-hover:-rotate-3 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-hover:rotate-0"
+            style={{ filter: "drop-shadow(0 18px 24px rgba(0,0,0,.14)) drop-shadow(0 4px 6px rgba(0,0,0,.08))" }}
+          />
+        </div>
 
-        <div className="mx-auto max-w-md border border-linija bg-papel p-8 shadow-papel">
-          {!submitted ? (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {fields.map((field) => (
-                <div key={field.id}>
-                  <label
-                    htmlFor={`booking-${field.id}`}
-                    className="mb-1 block text-sm text-negro"
-                  >
-                    {field.label} <span className="text-naranja">*</span>
-                  </label>
-                  <input
-                    id={`booking-${field.id}`}
-                    type={field.type}
-                    autoComplete={field.autoComplete}
-                    value={field.value}
-                    onChange={(e) => field.set(e.target.value)}
-                    required
-                    placeholder={field.placeholder}
-                    className={inputClass}
-                  />
+        <div>
+          <p className="text-center eyebrow md:text-left">{t.eyebrow}</p>
+          <h2 className="mt-6 text-center md:text-left">
+            {t.title}
+          </h2>
+          <p className="mx-auto mt-6 mb-14 max-w-140 text-center md:mx-0 md:text-left">
+            {t.text}
+          </p>
+  
+          <div className="mx-auto max-w-md border border-linija bg-papel p-8 shadow-papel md:mx-0">
+            {!submitted ? (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {fields.map((field) => (
+                  <div key={field.id}>
+                    <label
+                      htmlFor={`booking-${field.id}`}
+                      className="mb-1 block text-sm text-negro"
+                    >
+                      {field.label} <span className="text-naranja">*</span>
+                    </label>
+                    <input
+                      id={`booking-${field.id}`}
+                      type={field.type}
+                      autoComplete={field.autoComplete}
+                      value={field.value}
+                      onChange={(e) => field.set(e.target.value)}
+                      required
+                      placeholder={field.placeholder}
+                      className={inputClass}
+                    />
+                  </div>
+                ))}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="mt-2 btn w-full"
+                >
+                  {loading ? t.sending : t.submit}
+                </button>
+              </form>
+            ) : (
+              <div className="py-4 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-oro">
+                  <span className="text-3xl text-negro">✓</span>
                 </div>
-              ))}
-              <button
-                type="submit"
-                disabled={loading}
-                className="mt-2 btn w-full"
-              >
-                {loading ? t.sending : t.submit}
-              </button>
-            </form>
-          ) : (
-            <div className="py-4 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-oro">
-                <span className="text-3xl text-negro">✓</span>
+                <h3 className="mb-2 text-negro">
+                  {t.thanks.replace("{ime}", firstName)}
+                </h3>
+                <p className="mb-4 text-sm text-negro/75">{t.saved}</p>
+                <p className="mb-6 text-sm text-negro/75">{t.notOpened}</p>
+                <button
+                  onClick={openCalendar}
+                  className="btn w-full"
+                >
+                  {t.openCalendar}
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="mt-4 text-sm link"
+                >
+                  {t.again}
+                </button>
               </div>
-              <h3 className="mb-2 text-negro">
-                {t.thanks.replace("{ime}", firstName)}
-              </h3>
-              <p className="mb-4 text-sm text-negro/75">{t.saved}</p>
-              <p className="mb-6 text-sm text-negro/75">{t.notOpened}</p>
-              <button
-                onClick={openCalendar}
-                className="btn w-full"
-              >
-                {t.openCalendar}
-              </button>
-              <button
-                onClick={handleReset}
-                className="mt-4 text-sm link"
-              >
-                {t.again}
-              </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </section>

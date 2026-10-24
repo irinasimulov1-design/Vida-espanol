@@ -90,6 +90,7 @@ const sr = {
     notOpened: "Ako se kalendar nije otvorio, klikni dugme ispod.",
     openCalendar: "Otvori kalendar",
     again: "Zakaži još jedan termin",
+    phoneAlt: "Stari crveni telefon — zakaži čas",
   },
   footer: {
     links: "Linkovi",
@@ -139,6 +140,21 @@ const sr = {
       },
     ],
   },
+  newsletter: {
+    eyebrow: "Pisma",
+    title: "Španski, jednom u neko vreme, pravo u tvoj inbox",
+    text: "Kad napišem nešto novo — tekst, trik za pamćenje ili priču iz Španije — pošaljem ti kratko pismo. Bez žurbe i bez reklama.",
+    emailLabel: "Tvoja email adresa",
+    button: "Prijavi me",
+    sending: "Šaljem…",
+    sent: "Skoro gotovo — proveri inbox i potvrdi prijavu klikom na link.",
+    confirmed: "¡Gracias! Prijava je potvrđena. Vidimo se u pismu.",
+    expired: "Link za potvrdu je istekao. Upiši adresu ponovo, poslaću novi.",
+    error: "Nešto nije u redu. Pokušaj ponovo za par minuta.",
+    note: "Odjava je jedan klik u dnu svakog pisma.",
+    postcardLine: "pismo iz Španije",
+    postcardAlt: "Razglednica iz Španije — VIDA newsletter",
+  },
   privacy: {
     title: "Politika privatnosti",
     intro:
@@ -150,6 +166,7 @@ const sr = {
           "Google Analytics 4 — broji posete i pokazuje koje stranice se čitaju. Dok ne prihvatiš kolačiće, radi u režimu bez kolačića (Google Consent Mode) i ne pamti te.",
           "Microsoft Clarity — anonimne mape klikova i snimci kretanja po stranici, da vidim šta je nejasno. Učitava se tek kad prihvatiš kolačiće.",
           "Forma za zakazivanje — ime, prezime, email i telefon koje upišeš čuvaju se u mojoj Google tabeli, a termin biraš u Cal.com kalendaru. Koristim ih samo da se dogovorimo oko časa.",
+          "Pisma — ako se prijaviš i potvrdiš prijavu, tvoja email adresa se čuva u servisu Resend, preko kog šaljem pisma. Koristim je samo za pisma; odjava je jedan klik u dnu svakog pisma.",
         ],
       },
       {

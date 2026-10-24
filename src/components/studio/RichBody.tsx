@@ -11,7 +11,11 @@ import { FileButton } from "./Fields";
  * Telo posta. Dozvoljeno je samo ono što .prose u globals.css stilizuje (podnaslovi, liste,
  * citat, link, slika), pa tekst iz Studija uvek izgleda kao ostatak bloga.
  */
-export function useBodyEditor(markdown: string, onChange: (markdown: string) => void) {
+export function useBodyEditor(
+  markdown: string,
+  onChange: (markdown: string) => void,
+  placeholder = "Uvod: 2–3 rečenice, lično, na „ti“. Zašto je ova tema važna baš tebi…",
+) {
   return useEditor({
     immediatelyRender: false,
     extensions: [
@@ -24,7 +28,7 @@ export function useBodyEditor(markdown: string, onChange: (markdown: string) => 
         link: { openOnClick: false, autolink: true, defaultProtocol: "https" },
       }),
       Image.configure({ inline: false }),
-      Placeholder.configure({ placeholder: "Uvod: 2–3 rečenice, lično, na „ti“. Zašto je ova tema važna baš tebi…" }),
+      Placeholder.configure({ placeholder }),
       Markdown,
     ],
     content: markdown,
@@ -65,12 +69,13 @@ function ToolButton({
   );
 }
 
-export function Toolbar({ editor, onImage }: { editor: Editor | null; onImage: (file: File) => void }) {
+/** Bez `onImage` nema dugmeta za fotografiju (npr. u pismima, gde slika mora već biti na sajtu). */
+export function Toolbar({ editor, onImage }: { editor: Editor | null; onImage?: (file: File) => void }) {
   // Editor nastaje tek posle prvog renderovanja (immediatelyRender: false).
   return editor ? <ToolbarButtons editor={editor} onImage={onImage} /> : null;
 }
 
-function ToolbarButtons({ editor, onImage }: { editor: Editor; onImage: (file: File) => void }) {
+function ToolbarButtons({ editor, onImage }: { editor: Editor; onImage?: (file: File) => void }) {
   const state = useEditorState({
     editor,
     selector: ({ editor }) => ({
@@ -122,9 +127,11 @@ function ToolbarButtons({ editor, onImage }: { editor: Editor; onImage: (file: F
       <ToolButton label="Citat" active={state.quote} onClick={() => chain().toggleBlockquote().run()}>
         <span className="font-display text-lg leading-none">“</span>
       </ToolButton>
-      <FileButton onFile={onImage} className="min-w-9 px-2 py-1.5 text-sm text-negro hover:bg-blanco">
-        + fotografija
-      </FileButton>
+      {onImage && (
+        <FileButton onFile={onImage} className="min-w-9 px-2 py-1.5 text-sm text-negro hover:bg-blanco">
+          + fotografija
+        </FileButton>
+      )}
       <span className="mx-1 h-5 w-px bg-linija" />
       <ToolButton label="Poništi" onClick={() => chain().undo().run()}>
         ↶

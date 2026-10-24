@@ -63,3 +63,34 @@ Lokalno: `npx wrangler dev` (port 8787), tajne u `workers/studio-auth/.dev.vars`
 - **Konflikt**: ako je fajl izmenjen negde drugde od kad je otvoren, Studio ne prepisuje, nego upozori.
 - **Nesačuvane izmene** čuvaju se u browseru (localStorage) i nude se za vraćanje pri sledećem otvaranju.
 - **Brisanje**: ne postoji; post se sklanja sa sajta prebacivanjem u nacrt.
+
+## Pisma (newsletter preko Resend-a)
+
+U Studiju je tab **Pisma**: Irina piše pismo, gleda ga tačno kako stiže u inbox (računar/telefon), šalje sebi probu, pa šalje svima ili zakazuje. Pored svakog objavljenog teksta u listi stoji „✉ Pismo“, koje napravi pismo sa tim tekstom kao karticom.
+
+```
+Sajt: forma (početna, ispod posta) ─▶ Worker /newsletter/subscribe ─▶ mejl „potvrdi prijavu“
+      ─▶ /newsletter/confirm ─▶ Resend segment SR ili EN (po jeziku stranice)
+Studio: nacrt (content/pisma/<jezik>/*.md) ─▶ proba ─▶ /newsletter/send ─▶ Resend broadcast
+```
+
+- **Liste**: Resend „segmenti“ (ranije „audiences“). Postojeća lista sa starog sajta = SR; za EN napravi novi segment.
+- **Double opt-in**: adresa ulazi u listu tek kad klikne link iz mejla (važi 48h). Odjava je Resend link u dnu svakog pisma; Worker odbija pismo bez njega.
+- **Zaštita od greške**: „Pošalji svima“ se otključava tek kad je proba poslata za tačno tu verziju pisma; pre slanja Studio pita još jednom i pokaže broj ljudi. Zakazano pismo može da se otkaže.
+- **Statistika**: primilo / otvorilo / kliknulo / odjavilo se, iz Resend liste primalaca (Resend kešira do 15 min).
+- **Slike u pismu**: samo naslovna slika teksta sa bloga (mora već biti na sajtu); upload slika u pismo namerno ne postoji.
+
+### Podešavanje (jednom)
+
+1. Resend → Domains: dodaj `vidaspanish.com` i upiši DNS zapise (SPF, DKIM) kod registra domena; sačekaj „Verified“.
+2. Resend → Contacts → Segments: zapiši ID postojeće liste (SR) i napravi novu za EN.
+3. Resend → API Keys: ključ sa pravom slanja i rada sa kontaktima/broadcastima.
+4. U `workers/studio-auth/wrangler.toml` upiši `RESEND_SEGMENT_SR`, `RESEND_SEGMENT_EN` i po potrebi `NEWSLETTER_FROM`, pa (TEST_TO je adresa na koju stižu probe — kao secret, da tvoja adresa ne bude u javnom repou):
+
+```bash
+npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put TEST_TO
+npx wrangler deploy
+```
+
+Forma za prijavu se na sajtu prikazuje tek kad je `site.studio.authUrl` upisan (lokalno u razvoju se vidi uvek).

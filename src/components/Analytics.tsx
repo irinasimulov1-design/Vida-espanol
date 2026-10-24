@@ -32,10 +32,16 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document
 window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
 `;
 
+// Merenje samo na pravom domenu (i www): posete sa localhosta i proba ne ulaze u statistiku.
+const siteHost = new URL(site.url).hostname;
+const isLiveHost = () => location.hostname === siteHost || location.hostname === `www.${siteHost}`;
+const noSubscribe = () => () => {};
+
 // Napomena: id-jevi skripti ne smeju biti "clarity" / "ga" / "gtag" — browser izlaže elemente
 // po id-ju kao window.<id>, pa bi window.clarity postao <script> element umesto funkcije.
 export default function Analytics({ lang }: { lang: Locale }) {
   const consent = useSyncExternalStore(subscribeConsent, readConsent, () => null);
+  const live = useSyncExternalStore(noSubscribe, isLiveHost, () => false);
 
   // Promena izbora posle učitavanja (baner ili „Podešavanja kolačića“).
   useEffect(() => {
@@ -55,6 +61,8 @@ export default function Analytics({ lang }: { lang: Locale }) {
       // sessionStorage nedostupan — događaj se preskače
     }
   }, [lang]);
+
+  if (!live) return null;
 
   return (
     <>

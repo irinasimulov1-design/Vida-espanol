@@ -13,7 +13,9 @@ export type TrackEvent =
   | "klik_profil"
   | "cta_zakazi_cas"
   | "promena_jezika"
-  | "jezik_automatski";
+  | "jezik_automatski"
+  | "newsletter_prijava"
+  | "newsletter_potvrda";
 
 export function track(event: TrackEvent, params: Record<string, string> = {}) {
   if (typeof window === "undefined" || typeof window.gtag !== "function") return;

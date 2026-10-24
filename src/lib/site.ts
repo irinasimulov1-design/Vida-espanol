@@ -12,8 +12,8 @@ export const site = {
   },
 
   analytics: {
-    ga4: "", // Google Analytics 4, npr. "G-ABC123XYZ"
-    clarity: "", // Microsoft Clarity project ID, npr. "abcd1234ef"
+    ga4: "G-Z3LTJ4ZJN6", // Google Analytics 4, npr. "G-ABC123XYZ"
+    clarity: "yt7ntyw4fe", // Microsoft Clarity project ID, npr. "abcd1234ef"
   },
 
   verification: {
@@ -47,7 +47,7 @@ export const site = {
     // Iz koje grane nastaje `branch` ako još ne postoji (i odakle se čita do tada).
     // Dok dvojezični sajt nije spojen u master, to je njegova grana.
     baseBranch: "dvojezicni-blog-geo",
-    authUrl: "", // Cloudflare Worker studio-auth, npr. "https://vida-studio-auth.<nalog>.workers.dev"
+    authUrl: "https://vida-studio-auth.irinastojanovich.workers.dev", // Cloudflare Worker studio-auth, npr. "https://vida-studio-auth.<nalog>.workers.dev"
   },
 } as const;
 

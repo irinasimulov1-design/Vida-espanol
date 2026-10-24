@@ -92,6 +92,7 @@ const en: Dictionary = {
     notOpened: "If the calendar didn't open, click the button below.",
     openCalendar: "Open calendar",
     again: "Book another time",
+    phoneAlt: "A vintage red telephone — book a lesson",
   },
   footer: {
     links: "Links",
@@ -141,6 +142,21 @@ const en: Dictionary = {
       },
     ],
   },
+  newsletter: {
+    eyebrow: "Letters",
+    title: "Spanish, every now and then, straight to your inbox",
+    text: "When I write something new — an article, a memory trick or a story from Spain — I send you a short letter. No rush, no ads.",
+    emailLabel: "Your email address",
+    button: "Sign me up",
+    sending: "Sending…",
+    sent: "Almost there — check your inbox and confirm with the link.",
+    confirmed: "¡Gracias! You're confirmed. See you in the next letter.",
+    expired: "The confirmation link has expired. Enter your address again and I'll send a new one.",
+    error: "Something went wrong. Please try again in a few minutes.",
+    note: "Unsubscribing is one click at the bottom of every letter.",
+    postcardLine: "a letter from Spain",
+    postcardAlt: "A postcard from Spain — VIDA newsletter",
+  },
   privacy: {
     title: "Privacy policy",
     intro:
@@ -152,6 +168,7 @@ const en: Dictionary = {
           "Google Analytics 4 — counts visits and shows which pages are read. Until you accept cookies, it runs in cookieless mode (Google Consent Mode) and doesn't remember you.",
           "Microsoft Clarity — anonymous click maps and session recordings, so I can see what's confusing. It only loads after you accept cookies.",
           "Booking form — the name, email and phone number you enter are stored in my Google Sheet, and you pick a time in a Cal.com calendar. I use them only to arrange your lesson.",
+          "Letters — if you sign up and confirm, your email address is stored with Resend, the service I use to send letters. I use it only for the letters; unsubscribing is one click at the bottom of every letter.",
         ],
       },
       {
