@@ -4,7 +4,7 @@ import { openConsentBanner } from "@/lib/consent";
 
 export default function CookieSettingsLink({ label }: { label: string }) {
   return (
-    <button type="button" onClick={openConsentBanner} className="nav-link [--akcenat:var(--color-oro)]">
+    <button type="button" onClick={openConsentBanner} className="transition-colors duration-300 hover:text-fondo">
       {label}
     </button>
   );

@@ -25,7 +25,7 @@ export default function AuthorBox({ lang, t }: { lang: Locale; t: Dictionary }) 
           {t.author.eyebrow}
         </p>
         <p className="mt-1 font-display text-2xl font-medium italic text-negro">{site.author.name}</p>
-        <p className="mt-2 text-sm leading-relaxed text-negro/75">{t.author.bio}</p>
+        <p className="mt-2 text-sm">{t.author.bio}</p>
         <div className="mt-4 flex flex-wrap items-center gap-4">
           <SocialLinks labels={t.social} variant="light" />
           <Link

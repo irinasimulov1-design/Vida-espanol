@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
+import Naranja from "@/components/Naranja";
 import { getDictionary } from "@/i18n";
 import { hasLocale, locales, type Locale } from "@/i18n/config";
 import { pageAlternates } from "@/lib/routes";
@@ -26,31 +27,23 @@ export default async function BlogPage(props: PageProps<"/[lang]/blog">) {
   const posts = getAllPosts(lang);
 
   return (
-    <main>
-      {/* Zaglavlje: verde sa narandžastim „suncem“ kao na vintage posterima */}
-      <section className="relative overflow-hidden bg-verde">
-        <div
-          aria-hidden="true"
-          className="absolute top-1/2 -right-24 hidden h-112 w-112 -translate-y-1/4 rounded-full bg-naranja shadow-sunce inset-shadow-sunce md:block lg:right-0"
-        />
-        {/* Senčenje gornje i donje ivice sekcije, preko sunca */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 inset-shadow-sekcija" />
-        <div className="relative mx-auto max-w-300 px-4 py-18 md:px-8 md:py-24">
-          <p className="eyebrow text-oro text-shadow-dubina-sm">{t.blog.eyebrow}</p>
-          <h1 className="mt-3 text-blanco text-shadow-dubina">{t.blog.title}</h1>
-          <p className="mt-4 max-w-140 text-blanco/80 text-shadow-dubina-sm">{t.blog.text}</p>
-        </div>
-      </section>
+    <main className="mx-auto w-full max-w-300 px-5 md:px-8">
+      <header className="py-22 text-center md:py-36">
+        <p className="eyebrow">{t.blog.eyebrow}</p>
+        <h1 className="mt-6">{t.blog.title}</h1>
+        <p className="mx-auto mt-6 max-w-140">{t.blog.text}</p>
+        <Naranja className="mx-auto mt-10 h-5 w-5" />
+      </header>
 
-      <section className="mx-auto w-full max-w-300 px-4 py-18 md:px-8 md:py-24">
+      <section className="border-t border-negro pt-14 pb-22 md:pb-40">
         {posts.length > 0 ? (
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => (
               <PostCard key={post.slug} post={post} />
             ))}
           </div>
         ) : (
-          <p className="text-negro/60">{t.blog.empty}</p>
+          <p className="text-gris">{t.blog.empty}</p>
         )}
       </section>
     </main>

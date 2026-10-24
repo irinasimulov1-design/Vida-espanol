@@ -31,11 +31,11 @@ export default function AboutPage({ lang }: { lang: Locale }) {
   return (
     <main>
       {/* Ko je — intro section */}
-      <section className="bg-hormigon py-18 inset-shadow-sekcija-svetla md:py-30">
-        <div className="mx-auto max-w-4xl px-8">
-          <h1 className="text-negro">{a.title}</h1>
+      <section className="py-22 md:py-36">
+        <div className="mx-auto max-w-300 px-5 md:px-8">
+          <h1>{a.title}</h1>
 
-          <div className="mt-10 flex max-w-140 flex-col gap-5 text-negro/80">
+          <div className="mt-10 flex max-w-140 flex-col gap-5">
             {a.paragraphs.map((paragraph, i) => (
               <p key={i}>
                 {i === 0 && (
@@ -71,7 +71,7 @@ export default function AboutPage({ lang }: { lang: Locale }) {
           </div>
 
           <div className="mt-10">
-            <p className="eyebrow text-negro">{t.social.title}</p>
+            <p className="eyebrow">{t.social.title}</p>
             <div className="mt-3">
               <SocialLinks labels={t.social} variant="light" />
             </div>
@@ -80,27 +80,28 @@ export default function AboutPage({ lang }: { lang: Locale }) {
       </section>
 
       {/* Šta je najvažnije — method section */}
-      <section className="py-18 md:py-30">
-        <div className="mx-auto max-w-300 px-8">
-          <h2 className="text-center text-negro">
+      <section className="border-t border-linija py-22 md:py-40">
+        <div className="mx-auto max-w-300 px-5 md:px-8">
+          <h2 className="text-center">
             {a.methodTitle}
           </h2>
 
-          <div className="mt-14 flex flex-col items-center gap-12 lg:flex-row lg:items-start lg:gap-16">
-            <div className="shrink-0">
+          <div className="mt-16 flex flex-col items-center gap-16 lg:flex-row lg:items-start lg:gap-20">
+            {/* Polaroid: papirni ram, blago nakrivljen; ispravi se na hover (ispod 480px bez nagiba) */}
+            <div className="w-full max-w-md shrink-0 bg-papel p-4.5 pb-16 shadow-papel transition duration-300 hover:-translate-y-1.5 hover:rotate-0 hover:shadow-predmet min-[480px]:-rotate-2 lg:w-120 lg:max-w-none">
               <Image
                 src={site.author.image}
                 alt={a.imageAlt}
                 width={560}
                 height={744}
-                className="photo w-full max-w-md object-top lg:w-140"
+                className="photo aspect-[3/4] w-full object-top"
               />
             </div>
 
             <div className="flex flex-col gap-10">
               {a.pillars.map((pillar, i) => (
                 <div key={pillar.title} className="flex gap-5">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-hormigon text-naranja">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-linija text-negro">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -117,8 +118,8 @@ export default function AboutPage({ lang }: { lang: Locale }) {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-negro">{pillar.title}</h3>
-                    <p className="mt-2 leading-relaxed text-negro/80">{pillar.text}</p>
+                    <h3>{pillar.title}</h3>
+                    <p className="mt-2">{pillar.text}</p>
                   </div>
                 </div>
               ))}

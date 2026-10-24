@@ -16,6 +16,7 @@ const sr = {
     about: "O meni",
     book: "Zakaži čas",
     language: "Jezik",
+    menu: "Meni",
   },
   hero: {
     motto: "El idioma se vive.",
@@ -25,6 +26,7 @@ const sr = {
     ctaBlog: "Čitaj blog",
     ctaBook: "Zakaži čas sa Irinom",
     highlights: ["Praktični saveti", "Lična iskustva", "Bez straha od greške"],
+    scroll: "Nastavi dole",
     imageAlt: "Irina, profesorka španskog",
     nameCardRole: "Hola! Ja pišem ovaj blog.",
   },
@@ -36,6 +38,7 @@ const sr = {
     empty: "Uskoro stižu novi tekstovi.",
   },
   blog: {
+    read: "Pročitaj",
     eyebrow: "El idioma se vive.",
     title: "Blog",
     text: "Gramatika bez muke, reči za stvaran život i priče iz Španije. Uzmi kafu i čitaj redom — ili tamo gde te srce vuče.",

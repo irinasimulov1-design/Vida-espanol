@@ -57,7 +57,7 @@ function ToolButton({
       onMouseDown={(e) => e.preventDefault()}
       onClick={onClick}
       className={`min-w-9 px-2 py-1.5 text-sm transition-colors ${
-        active ? "bg-negro text-blanco" : "text-negro hover:bg-hormigon"
+        active ? "bg-negro text-blanco" : "text-negro hover:bg-blanco"
       }`}
     >
       {children}
@@ -122,7 +122,7 @@ function ToolbarButtons({ editor, onImage }: { editor: Editor; onImage: (file: F
       <ToolButton label="Citat" active={state.quote} onClick={() => chain().toggleBlockquote().run()}>
         <span className="font-display text-lg leading-none">“</span>
       </ToolButton>
-      <FileButton onFile={onImage} className="min-w-9 px-2 py-1.5 text-sm text-negro hover:bg-hormigon">
+      <FileButton onFile={onImage} className="min-w-9 px-2 py-1.5 text-sm text-negro hover:bg-blanco">
         + fotografija
       </FileButton>
       <span className="mx-1 h-5 w-px bg-linija" />

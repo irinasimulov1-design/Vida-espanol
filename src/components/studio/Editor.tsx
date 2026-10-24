@@ -265,7 +265,7 @@ export default function Editor({
     >
       {!post.coverImage && <p className="text-sm text-negro/60">Naslovna fotografija (preporučeno)</p>}
       <div className="flex flex-wrap justify-center gap-2">
-        <FileButton onFile={(f) => addImage(f, true)} className={`btn ${post.coverImage ? "btn-ghost btn-ghost-light" : "btn-ghost"} px-4! py-2.5!`}>
+        <FileButton onFile={(f) => addImage(f, true)} className={`btn ${post.coverImage ? "" : "btn-ghost"} px-4! py-2.5!`}>
           {post.coverImage ? "Promeni" : "Dodaj fotografiju"}
         </FileButton>
         {coverLibrary.length > 0 && (
@@ -273,7 +273,7 @@ export default function Editor({
             aria-label="Izaberi postojeću fotografiju"
             value=""
             onChange={(e) => e.target.value && update({ coverImage: e.target.value })}
-            className={`eyebrow border px-3 py-2 ${post.coverImage ? "border-blanco bg-negro/40 text-blanco" : "border-negro bg-transparent text-negro"}`}
+            className={`eyebrow border px-3 py-2 ${post.coverImage ? "border-negro bg-negro text-fondo" : "border-negro bg-transparent text-negro"}`}
           >
             <option value="">Iz biblioteke</option>
             {coverLibrary.map((src) => (
@@ -284,7 +284,7 @@ export default function Editor({
           </select>
         )}
         {post.coverImage && (
-          <button type="button" onClick={() => update({ coverImage: "" })} className="btn btn-ghost btn-ghost-light px-4! py-2.5!">
+          <button type="button" onClick={() => update({ coverImage: "" })} className="btn px-4! py-2.5!">
             Ukloni
           </button>
         )}
@@ -382,7 +382,7 @@ export default function Editor({
                   value={post.categories}
                   suggestions={categorySuggestions}
                   onChange={(categories) => update({ categories })}
-                  light={!!post.coverImage}
+                  light={false}
                 />
               ),
               summary: (

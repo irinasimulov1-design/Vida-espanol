@@ -19,14 +19,14 @@ export default function LanguageSwitcher({ lang, label }: { lang: Locale; label:
     <div
       role="group"
       aria-label={label}
-      className="flex items-center border border-linija text-xs font-normal uppercase tracking-[0.2em]"
+      className="flex items-center gap-1.5 text-[11px] font-normal uppercase leading-none tracking-[0.3em]"
     >
       {locales.map((locale) =>
         locale === lang ? (
           <span
             key={locale}
             aria-current="true"
-            className="bg-negro px-2.5 py-1 text-blanco"
+            className="bg-negro px-3.5 py-3 text-fondo"
           >
             {locale}
           </span>
@@ -46,7 +46,7 @@ export default function LanguageSwitcher({ lang, label }: { lang: Locale; label:
               }
               track("promena_jezika", { sa: lang, na: locale, nacin: "rucno" });
             }}
-            className="px-2.5 py-1 text-negro/60 transition-colors hover:bg-oro hover:text-negro"
+            className="px-3.5 py-3 text-negro shadow-[inset_0_0_0_1px_var(--color-negro)] transition-colors duration-300 hover:bg-tinto hover:text-fondo hover:shadow-[inset_0_0_0_1px_var(--color-tinto)]"
           >
             {locale}
           </a>

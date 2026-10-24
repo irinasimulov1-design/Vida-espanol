@@ -39,12 +39,11 @@ function PreplyIcon() {
 
 type Profile = keyof typeof site.social;
 
-// Hover boja na tamnoj pozadini (footer): svaka ikonica svoja boja brenda.
-const profiles: { key: Profile; icon: ReactNode; hoverDark: string }[] = [
-  { key: "instagram", icon: <InstagramIcon />, hoverDark: "hover:bg-naranja hover:text-blanco" },
-  { key: "youtube", icon: <YouTubeIcon />, hoverDark: "hover:bg-oro hover:text-negro" },
-  { key: "linkedin", icon: <LinkedInIcon />, hoverDark: "hover:bg-mostaza hover:text-negro" },
-  { key: "preply", icon: <PreplyIcon />, hoverDark: "hover:bg-blanco hover:text-verde" },
+const profiles: { key: Profile; icon: ReactNode }[] = [
+  { key: "instagram", icon: <InstagramIcon /> },
+  { key: "youtube", icon: <YouTubeIcon /> },
+  { key: "linkedin", icon: <LinkedInIcon /> },
+  { key: "preply", icon: <PreplyIcon /> },
 ];
 
 /** Linkovi ka profilima; profil bez URL-a u site.ts je neaktivna ikonica („uskoro“). */
@@ -55,15 +54,13 @@ export default function SocialLinks({
   labels: Record<Profile | "soon", string>;
   variant?: "dark" | "light";
 }) {
-  const style =
-    variant === "dark"
-      ? "bg-blanco/10 text-blanco/80 hover:-translate-y-0.5"
-      : "bg-hormigon text-negro hover:bg-negro hover:text-blanco";
-  const placeholderStyle = variant === "dark" ? "bg-blanco/10 text-blanco" : "bg-hormigon text-negro";
+  // Monohromatske ikonice; boja tek na hover (oro na tamnom footeru, bordo na svetloj podlozi).
+  const style = variant === "dark" ? "text-fondo/60 hover:text-oro" : "text-negro/70 hover:text-tinto";
+  const placeholderStyle = variant === "dark" ? "text-fondo/60" : "text-negro/70";
 
   return (
-    <div className="flex gap-3">
-      {profiles.map(({ key, icon, hoverDark }) =>
+    <div className="flex gap-2">
+      {profiles.map(({ key, icon }) =>
         site.social[key] ? (
           <a
             key={key}
@@ -73,9 +70,7 @@ export default function SocialLinks({
             aria-label={labels[key]}
             title={labels[key]}
             onClick={() => track("klik_profil", { profil: key })}
-            className={`flex h-10 w-10 items-center justify-center rounded-full transition ${style} ${
-              variant === "dark" ? hoverDark : ""
-            }`}
+            className={`flex h-9 w-9 items-center justify-center transition-colors duration-300 ${style}`}
           >
             {icon}
           </a>
@@ -85,7 +80,7 @@ export default function SocialLinks({
             role="img"
             aria-label={`${labels[key]} (${labels.soon})`}
             title={`${labels[key]} (${labels.soon})`}
-            className={`flex h-10 w-10 cursor-default items-center justify-center rounded-full opacity-40 ${placeholderStyle}`}
+            className={`flex h-9 w-9 cursor-default items-center justify-center opacity-40 ${placeholderStyle}`}
           >
             {icon}
           </span>

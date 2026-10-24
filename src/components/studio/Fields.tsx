@@ -55,7 +55,7 @@ export function CategoriesEditor({
   };
 
   return (
-    <div className={`mt-5 flex flex-wrap items-center gap-2 ${light ? "justify-center" : ""}`}>
+    <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
       {value.map((cat) => (
         <span key={cat} className="eyebrow flex items-center gap-2 bg-oro px-3 py-1 text-negro">
           {cat}

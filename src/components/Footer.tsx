@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
+import Tenda from "@/components/Tenda";
 import SocialLinks from "@/components/SocialLinks";
 import CookieSettingsLink from "@/components/CookieSettingsLink";
 import type { Locale } from "@/i18n/config";
@@ -7,69 +8,54 @@ import type { Dictionary } from "@/i18n";
 import { bookingHref, href } from "@/lib/routes";
 import { site } from "@/lib/site";
 
+const footerLink = "eyebrow text-fondo/60! transition-colors duration-300 hover:text-fondo!";
+
+/** Footer: zelena tenda, ispod crna traka sa logom, rukopisom „llena de vida“ i linkovima. */
 export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
-  // Na verde pozadini tekst na hover postaje blanco, a linija ispod dobija boju linka.
   const footerLinks = [
-    { label: t.nav.home, href: href("home", lang), accent: "[--akcenat:var(--color-naranja)]" },
-    { label: t.nav.blog, href: href("blog", lang), accent: "[--akcenat:var(--color-oro)]" },
-    { label: t.nav.about, href: href("about", lang), accent: "[--akcenat:var(--color-mostaza)]" },
-    { label: t.nav.book, href: bookingHref(lang), accent: "[--akcenat:var(--color-oro)]" },
+    { label: t.nav.blog, href: href("blog", lang) },
+    { label: t.nav.about, href: href("about", lang) },
+    { label: t.nav.book, href: bookingHref(lang) },
   ];
 
   return (
-    <footer className="bg-verde text-blanco/80 inset-shadow-sekcija [--akcenat-tekst:var(--color-blanco)]">
-      <div className="mx-auto max-w-300 px-4 py-16 md:px-8">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Brand */}
-          <div>
+    <footer className="mt-auto bg-negro text-fondo/70">
+      <Tenda />
+
+      <div className="mx-auto max-w-300 px-5 pt-16 pb-10 md:px-8 md:pt-20">
+        <div className="grid items-center gap-10 text-center md:grid-cols-3 md:text-left">
+          <div className="flex justify-center md:justify-start">
             <Logo lang={lang} light />
-            <div className="mt-6 border-t border-blanco/15 pt-6">
-              <p className="font-display text-lg italic text-blanco text-shadow-dubina-sm">El idioma se vive.</p>
-              <p className="mt-2 text-sm text-blanco/70">{t.footer.tagline}</p>
-            </div>
           </div>
 
-          {/* Links */}
-          <div>
-            <h3 className="text-blanco text-shadow-dubina-sm">{t.footer.links}</h3>
-            <ul className="mt-6 flex flex-col gap-3 text-sm">
-              {footerLinks.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className={`nav-link ${link.accent}`}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <p className="font-script text-5xl leading-none text-oro md:text-center">llena de vida</p>
 
-          {/* Social + contact */}
-          <div>
-            <h3 className="text-blanco text-shadow-dubina-sm">{t.footer.followMe}</h3>
-            <div className="mt-6">
-              <SocialLinks labels={t.social} />
-            </div>
-
-            <h3 className="mt-8 text-blanco text-shadow-dubina-sm">{t.footer.writeMe}</h3>
-            <ul className="mt-4 flex flex-col gap-2 text-sm">
-              <li>
-                <a href={`mailto:${site.email}`} className="nav-link [--akcenat:var(--color-naranja)]">
-                  {site.email}
-                </a>
+          <ul className="flex flex-wrap justify-center gap-x-6 gap-y-3 md:justify-end">
+            {footerLinks.map((link) => (
+              <li key={link.label}>
+                <Link href={link.href} className={footerLink}>
+                  {link.label}
+                </Link>
               </li>
-            </ul>
-          </div>
+            ))}
+          </ul>
         </div>
-      </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-blanco/15">
-        <div className="mx-auto flex max-w-300 flex-wrap items-center justify-center gap-x-6 gap-y-2 px-4 py-5 text-xs text-blanco/60 md:px-8">
-          <span>&copy; {new Date().getFullYear()} VIDA — a la española</span>
-          <Link href={href("privacy", lang)} className="nav-link [--akcenat:var(--color-naranja)]">
-            {t.footer.privacy}
-          </Link>
-          <CookieSettingsLink label={t.footer.cookieSettings} />
+        <div className="mt-14 flex flex-col items-center gap-6 border-t border-fondo/15 pt-8 md:flex-row md:justify-between">
+          <div className="flex items-center gap-5">
+            <SocialLinks labels={t.social} />
+            <a href={`mailto:${site.email}`} className="text-sm text-fondo/60 transition-colors duration-300 hover:text-fondo">
+              {site.email}
+            </a>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-fondo/50">
+            <span>&copy; {new Date().getFullYear()} VIDA · a la española</span>
+            <Link href={href("privacy", lang)} className="transition-colors duration-300 hover:text-fondo">
+              {t.footer.privacy}
+            </Link>
+            <CookieSettingsLink label={t.footer.cookieSettings} />
+          </div>
         </div>
       </div>
     </footer>

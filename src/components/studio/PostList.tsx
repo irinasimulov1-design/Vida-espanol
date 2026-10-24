@@ -14,7 +14,7 @@ const LANG_NAME: Record<Locale, string> = { sr: "Srpski", en: "Engleski" };
 
 const STATUS_STYLE = {
   objavljen: "bg-verde text-blanco",
-  nacrt: "bg-hormigon text-negro",
+  nacrt: "bg-blanco text-negro",
   zakazan: "bg-oro text-negro",
 } as const;
 

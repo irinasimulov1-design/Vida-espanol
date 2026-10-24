@@ -22,7 +22,7 @@ Nije konfigurisan nijedan test framework.
 - **Alias za putanje** `@/*` se razrešava u `src/*`.
 - **Tailwind CSS 4** putem PostCSS plugina (`@tailwindcss/postcss`); globalni stilovi u `src/app/globals.css`.
 - **Fontovi** (`src/app/fonts.ts`, `next/font/google`): Outfit 300/400/500 (tekst, UI; `font-sans`), Cormorant Garamond 500 + italik (naslovi i logo; `font-display`), Mrs Saint Delafield (rukopis, 1–2 reči; `font-script`) i Abril Fatface (samo posteri/razglednice; `font-poster`). Poslednja dva bez preload-a.
-- **Brending (VIDA · a la española)**: izvor za tehnički deo je `vida-brending.md` (fontovi, boje, raspored, komponente; NE ponuda, ton ni naslovi). Boje su Tailwind tokeni u `globals.css`: neutralne `blanco` (pozadina), `hormigon` (tihe sekcije), `negro` (sav tekst), pomoćne `papel` i `linija`; boje `naranja`, `rojo`, `tinto`, `verde`, `mostaza`, `oro`. 70% neutralno / 30% boja, jedna boja po sekciji; `tinto` SAMO za CTA dugmad; naranja/rojo/tinto nikad jedna do druge. Bez zaobljenja, tanke linije umesto senki (`shadow-papel` samo za „papirne“ predmete). Gotove klase: `btn`, `btn-ghost`, `btn-ghost-light`, `eyebrow`, `link`, `photo`. Sadržaj max 1200px (`max-w-300`), tekst max 560px, razmak sekcija `py-18 md:py-30`. Ton: lično, toplo, „ti“, bez straha i žurbe, tvrdnje moraju moći da se provere.
+- **Brending (VIDA · a la española)**: izvor za tehnički deo je `vida-brending.md` (lokalno, u `.gitignore`; fontovi, boje, raspored, komponente; NE ponuda, ton ni naslovi). Princip: živo, a ne sterilno, ali većinom minimalizam, najmanje 70% praznog prostora. **Okvir je crno-beo**: `fondo` (pozadina), `negro` (naslovi, dugmad, footer), `texto` (tekst), `gris` (oznake), `linija`, `blanco` (povremena sekcija), `papel` (papirni predmeti). Boje `naranja`, `rojo`, `tinto`, `verde`, `mostaza`, `oro` žive samo u malim detaljima i fotkama (najviše jedan predmet u boji po sekciji). **Bordo (`tinto`) samo na hover/fokus**, nikad stalna boja. Fotke na karticama su monohromatske (`photo-mono`), boju i zlatnu oznaku dobijaju na hover. Bez zaobljenja i dekorativnih senki (`shadow-papel`/`shadow-predmet` samo za papirne predmete). Gotove klase: `btn`, `btn-ghost`, `btn-link`, `nav-blok`, `eyebrow`, `link`, `photo`, `photo-mono`. Logo je mala narandža (`Naranja.tsx`, favicon `src/app/icon.svg`). Sadržaj max 1200px (`max-w-300`), tekst max 560px, razmak sekcija `py-22 md:py-40`. Ton: lično, toplo, „ti“, bez straha i žurbe, tvrdnje moraju moći da se provere.
 - **Konfiguracija**: `src/lib/site.ts` je jedino mesto za domen (`vidaspanish.com`), GA4/Clarity ID-jeve, GSC/Bing verifikaciju, IndexNow ključ, Preply/LinkedIn/Instagram linkove i booking podešavanja. Prazno polje = ne prikazuje se / ne učitava.
 - **Tri root layout-a**: `src/app/[lang]/layout.tsx` (sajt, `<html lang={lang}>`), `src/app/(ulaz)/layout.tsx` (samo `/`) i `src/app/(studio)/layout.tsx` (samo `/studio`). 404 ide kroz `src/app/global-not-found.tsx` (`experimental.globalNotFound`).
 - **Tipovi**: generisani `LayoutProps` / `PageProps` / `RouteContext` iz Next.js 16 (`npx next typegen` posle dodavanja ruta).
@@ -38,7 +38,7 @@ Nije konfigurisan nijedan test framework.
 ## Struktura stranica
 
 - `/` — ulaz: prepoznaje jezik i preusmerava na `/sr` ili `/en` (x-default za hreflang)
-- `/[lang]` — Početna (hero sa video pozadinom, poslednja 3 posta, forma za zakazivanje `#zakazi-cas`)
+- `/[lang]` — Početna (prazan prvi ekran: samo VIDA i „a la española“, pa filozofija, poslednja 3 posta, forma za zakazivanje `#zakazi-cas`)
 - `/[lang]/blog`, `/[lang]/blog/[slug]` — lista i post (Ukratko, FAQ, kutija o autorki, CTA, deljenje)
 - `/sr/o-meni`, `/en/about` — O meni
 - `/sr/privatnost`, `/en/privacy` — Politika privatnosti
@@ -47,7 +47,7 @@ Nije konfigurisan nijedan test framework.
 
 ## Komponente (`src/components/`)
 
-- `Logo.tsx`, `Header.tsx` (sa `LanguageSwitcher`), `Footer.tsx`, `LanguageHint.tsx`
+- `Naranja.tsx` (logo), `Logo.tsx` (tipografski, u footeru), `Header.tsx` (crni blokovi + `LanguageSwitcher`, na mobilnom `MobileMenu`), `Footer.tsx` (crn, sa `Tenda.tsx` na vrhu), `LanguageHint.tsx`
 - `PostView.tsx` — izgled posta, deljen između `blog/[slug]` i Studija (slotovi za editabilna polja)
 - `studio/` — Studio: `Studio` (prijava, lista), `Editor` (WYSIWYG preko `PostView`), `RichBody` (Tiptap + markdown), `Fields`, `SeoPanel`; logika u `src/lib/studio/` (`github.ts` commit kroz Git Data API, `markdown.ts` frontmatter, `auth.ts`, `image.ts`, `slug.ts`)
 - `PostCard.tsx`, `ShareButtons.tsx`, `AuthorBox.tsx`, `SocialLinks.tsx` (Instagram/LinkedIn/Preply; profil bez URL-a se ne prikazuje)

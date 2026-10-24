@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 /* VIDA · a la española — brend tokeni (izvor: vida-brending.md)
-   70% neutralno (blanco, hormigon, negro) · 30% boja, jedna boja po sekciji.
-   Tinto je SAMO za CTA dugmad. Narandža, rojo i tinto nikad jedna do druge.
-   Na naranja/rojo/tinto/verde tekst je blanco; na oro/mostaza tekst je negro. */
+   Živo, a ne sterilno, ali većinom minimalizam: manje je više.
+   Okvir sajta je crno-beo (fondo, negro, gris). Boja živi samo u malim detaljima i fotkama,
+   najviše jedan predmet u boji po sekciji. Bordo (tinto) se javlja tek na hover/fokus. */
 :root {
-  --background: var(--color-blanco);
-  --foreground: var(--color-negro);
+  --background: var(--color-fondo);
+  --foreground: var(--color-texto);
 }
 
 @theme inline {
@@ -20,12 +20,16 @@
 }
 
 @theme {
-  /* neutralne */
+  /* okvir (crno-belo) */
+  --color-fondo: #FBFAF7;
+  --color-negro: #1F1F1F;
+  --color-texto: #4A4743;
+  --color-gris: #8A8782;
+  --color-linija: #E6E2DA;
   --color-blanco: #F5F2EC;
-  --color-hormigon: #D6D3CD;
-  --color-negro: #2B2B2B;
+  --color-papel: #FFFDF8;
 
-  /* boje */
+  /* boje predmeta i detalja */
   --color-naranja: #E07B39;
   --color-rojo: #B3262E;
   --color-tinto: #6B1F28;
@@ -33,26 +37,9 @@
   --color-mostaza: #C9A13B;
   --color-oro: #E8C88A;
 
-  /* pomoćne */
-  --color-papel: #FBF8F2;
-  --color-linija: #E3DED5;
-
-  /* senka samo za „papirne“ predmete (razglednica, karta, poster) */
-  --shadow-papel: 0 10px 26px rgba(0, 0, 0, 0.1);
-
-  /* dubina za zaglavlje bloga (verde + sunce): senka sunca, senčenje ivica, senka teksta */
-  --shadow-sunce: 0 24px 60px rgba(0, 0, 0, 0.3);
-  --inset-shadow-sunce: inset -36px -44px 70px rgba(107, 31, 40, 0.35), inset 24px 28px 50px rgba(255, 255, 255, 0.14);
-  --inset-shadow-sekcija: inset 0 18px 36px -18px rgba(0, 0, 0, 0.35), inset 0 -28px 48px -24px rgba(0, 0, 0, 0.4);
-  /* svetle sekcije (hormigon): samo nagoveštaj senke sa gornje ivice */
-  --inset-shadow-sekcija-svetla: inset 0 16px 32px -20px rgba(0, 0, 0, 0.14);
-  /* fotka „podignuta“ sa podloge */
-  --shadow-fotka: 0 28px 60px -12px rgba(0, 0, 0, 0.45);
-  --text-shadow-dubina: 0 2px 14px rgba(0, 0, 0, 0.3);
-  --text-shadow-dubina-sm: 0 1px 6px rgba(0, 0, 0, 0.25);
-  /* hover u headeru/footeru: link i dugme se blago podignu i bace malu senku */
-  --text-shadow-podignuto: 0 4px 6px rgba(0, 0, 0, 0.22);
-  --shadow-podignuto: 0 8px 16px -6px rgba(0, 0, 0, 0.35);
+  /* senke samo za papirne predmete; na hover malo jače */
+  --shadow-papel: 0 14px 30px rgba(0, 0, 0, 0.1);
+  --shadow-predmet: 0 20px 38px rgba(0, 0, 0, 0.14);
 }
 
 @layer base {
@@ -62,26 +49,27 @@
     font-family: var(--font-sans);
     font-weight: 300;
     font-size: 1rem;
-    line-height: 1.6;
+    line-height: 1.7;
   }
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 500;
+    color: var(--color-negro);
   }
 
   h1 {
-    font-size: 2.5rem;
-    line-height: 1.08;
+    font-size: 2.25rem;
+    line-height: 1.12;
   }
 
   h2 {
-    font-size: 2rem;
-    line-height: 1.15;
+    font-size: 2.125rem;
+    line-height: 1.12;
   }
 
   h3 {
-    font-size: 1.375rem;
+    font-size: 1.5rem;
     line-height: 1.2;
     font-style: italic;
   }
@@ -90,17 +78,19 @@
     font-style: italic;
   }
 
-  @media (width >= 48rem) {
-    body {
-      font-size: 1.125rem;
-    }
+  /* Fokus za tastaturu: tanka bordo linija */
+  :focus-visible {
+    outline: 2px solid var(--color-tinto);
+    outline-offset: 3px;
+  }
 
+  @media (width >= 48rem) {
     h1 {
-      font-size: 4rem;
+      font-size: 3.25rem;
     }
 
     h2 {
-      font-size: 2.75rem;
+      font-size: 3rem;
     }
 
     h3 {
@@ -110,34 +100,36 @@
 }
 
 @layer components {
-  /* Oznaka / eyebrow: PALABRA DEL DÍA · AHORA ABIERTO */
+  /* Oznaka / eyebrow: sitno, velika slova, sivo */
   .eyebrow {
     font-family: var(--font-sans);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 400;
     font-style: normal;
-    line-height: 1.4;
+    line-height: 1.5;
     letter-spacing: 0.32em;
     text-transform: uppercase;
+    color: var(--color-gris);
   }
 
-  /* CTA dugme: tinto je jedini „glasni“ element na strani */
+  /* Dugme: crno; bordo tek na hover/fokus */
   .btn {
     display: inline-block;
-    background: var(--color-tinto);
-    color: var(--color-blanco);
-    font: 400 13px/1 var(--font-sans);
-    letter-spacing: 0.28em;
+    background: var(--color-negro);
+    color: var(--color-fondo);
+    font: 400 12px/1 var(--font-sans);
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     text-align: center;
-    padding: 16px 28px;
+    padding: 15px 26px;
     border: 0;
     border-radius: 0;
-    transition: background-color 150ms, color 150ms, border-color 150ms;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
   }
 
-  .btn:hover {
-    background: var(--color-negro);
+  .btn:hover,
+  .btn:focus-visible {
+    background: var(--color-tinto);
   }
 
   .btn:disabled {
@@ -147,69 +139,71 @@
   .btn-ghost {
     background: transparent;
     color: var(--color-negro);
-    border: 1px solid var(--color-negro);
+    box-shadow: inset 0 0 0 1px var(--color-negro);
   }
 
-  .btn-ghost:hover {
-    background: var(--color-negro);
-    color: var(--color-blanco);
+  .btn-ghost:hover,
+  .btn-ghost:focus-visible {
+    background: var(--color-tinto);
+    color: var(--color-fondo);
+    box-shadow: inset 0 0 0 1px var(--color-tinto);
   }
 
-  /* Ghost dugme na tamnoj pozadini (hero preko videa) */
+  /* Ghost dugme preko fotke */
   .btn-ghost-light {
-    color: var(--color-blanco);
-    border-color: var(--color-blanco);
+    color: var(--color-fondo);
+    box-shadow: inset 0 0 0 1px var(--color-fondo);
   }
 
-  .btn-ghost-light:hover {
-    background: var(--color-blanco);
+  /* Tekstualni poziv: velika slova sa tankom linijom ispod (npr. „Zakaži čas“) */
+  .btn-link {
+    display: inline-block;
+    font: 400 12px/1 var(--font-sans);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
     color: var(--color-negro);
+    padding-bottom: 8px;
+    border-bottom: 1px solid currentColor;
+    transition: color 0.25s ease;
   }
 
-  /* Link u tekstu: negro sa tankom narandžastom linijom */
+  .btn-link:hover,
+  .btn-link:focus-visible {
+    color: var(--color-tinto);
+  }
+
+  /* Navigacija: svaki link je zaseban crni blok; na hover postaje bordo */
+  .nav-blok {
+    display: inline-block;
+    background: var(--color-negro);
+    color: var(--color-fondo);
+    font: 400 11px/1 var(--font-sans);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .nav-blok:hover,
+  .nav-blok:focus-visible,
+  .nav-blok[aria-expanded="true"] {
+    background: var(--color-tinto);
+  }
+
+  /* Link u tekstu: crn sa tankom linijom; bordo na hover */
   .link {
+    color: var(--color-negro);
     text-decoration: underline;
-    text-decoration-color: var(--color-naranja);
+    text-decoration-color: var(--color-linija);
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
-    transition: text-decoration-color 150ms;
+    transition: color 0.25s ease, text-decoration-color 0.25s ease;
   }
 
-  .link:hover {
+  .link:hover,
+  .link:focus-visible {
+    color: var(--color-tinto);
     text-decoration-color: currentColor;
-  }
-
-  /* Link u headeru/footeru: na hover tekst dobija boju --akcenat (ili --akcenat-tekst),
-     a ispod se s leva razvlači linija u boji --akcenat. Svaki link postavlja svoju boju. */
-  .nav-link {
-    position: relative;
-    display: inline-block;
-    transition: color 200ms, transform 200ms ease-out, text-shadow 200ms;
-  }
-
-  .nav-link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -4px;
-    height: 2px;
-    background: var(--akcenat, var(--color-naranja));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 250ms ease-out;
-  }
-
-  .nav-link:hover,
-  .nav-link:focus-visible {
-    color: var(--akcenat-tekst, var(--akcenat, var(--color-naranja)));
-    transform: translateY(-2px);
-    text-shadow: var(--text-shadow-podignuto);
-  }
-
-  .nav-link:hover::after,
-  .nav-link:focus-visible::after {
-    transform: scaleX(1);
   }
 
   /* Tretman fotki: topao filmski ton */
@@ -218,10 +212,22 @@
     border-radius: 0;
     object-fit: cover;
   }
+
+  /* Fotka na kartici: monohromatska u mirovanju, boja na hover/fokus kartice */
+  .photo-mono {
+    object-fit: cover;
+    filter: grayscale(1) contrast(0.95);
+    transition: filter 0.4s ease, transform 0.4s ease;
+  }
+
+  .group:hover .photo-mono,
+  .group:focus-visible .photo-mono {
+    filter: saturate(0.92) sepia(0.08) contrast(0.97);
+  }
 }
 
 .prose h2 {
-  font-size: 2rem;
+  font-size: 2.125rem;
   margin-top: 2.5rem;
   margin-bottom: 0.75rem;
 }
@@ -259,18 +265,21 @@
 }
 
 .prose a {
+  color: var(--color-negro);
   text-decoration: underline;
-  text-decoration-color: var(--color-naranja);
+  text-decoration-color: var(--color-linija);
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
 }
 
 .prose a:hover {
+  color: var(--color-tinto);
   text-decoration-color: currentColor;
 }
 
 .prose strong {
   font-weight: 500;
+  color: var(--color-negro);
 }
 
 .prose blockquote {

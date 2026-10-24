@@ -79,13 +79,13 @@ export default function Booking({ t }: { t: Dictionary["booking"] }) {
   ];
 
   return (
-    <section id="zakazi-cas" className="scroll-mt-20 bg-hormigon py-18 inset-shadow-sekcija-svetla md:py-30">
-      <div className="mx-auto max-w-300 px-4 md:px-8">
+    <section id="zakazi-cas" className="scroll-mt-6 bg-blanco py-22 md:py-40">
+      <div className="mx-auto max-w-300 px-5 md:px-8">
         <p className="text-center eyebrow">{t.eyebrow}</p>
-        <h2 className="mt-2 text-center text-negro">
+        <h2 className="mt-6 text-center">
           {t.title}
         </h2>
-        <p className="mx-auto mt-4 mb-12 max-w-2xl text-center text-negro/75">
+        <p className="mx-auto mt-6 mb-14 max-w-140 text-center">
           {t.text}
         </p>
 
@@ -96,7 +96,7 @@ export default function Booking({ t }: { t: Dictionary["booking"] }) {
                 <div key={field.id}>
                   <label
                     htmlFor={`booking-${field.id}`}
-                    className="mb-1 block text-sm font-medium text-negro"
+                    className="mb-1 block text-sm text-negro"
                   >
                     {field.label} <span className="text-naranja">*</span>
                   </label>

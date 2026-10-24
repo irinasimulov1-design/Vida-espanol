@@ -18,6 +18,7 @@ const en: Dictionary = {
     about: "About",
     book: "Book a lesson",
     language: "Language",
+    menu: "Menu",
   },
   hero: {
     motto: "El idioma se vive.",
@@ -27,6 +28,7 @@ const en: Dictionary = {
     ctaBlog: "Read the blog",
     ctaBook: "Book a lesson with Irina",
     highlights: ["Practical tips", "Real experiences", "No fear of mistakes"],
+    scroll: "Scroll down",
     imageAlt: "Irina, Spanish teacher",
     nameCardRole: "¡Hola! I write this blog.",
   },
@@ -38,6 +40,7 @@ const en: Dictionary = {
     empty: "New articles are on their way.",
   },
   blog: {
+    read: "Read",
     eyebrow: "El idioma se vive.",
     title: "Blog",
     text: "Grammar without the headache, words for real life and stories from Spain. Grab a coffee and read in order — or wherever your heart pulls you.",

@@ -19,13 +19,13 @@ export default function PrivacyPage({ lang }: { lang: Locale }) {
   const p = getDictionary(lang).privacy;
 
   return (
-    <main className="mx-auto w-full max-w-152 px-6 pt-16 pb-20">
-      <h1 className="text-negro">{p.title}</h1>
-      <p className="mt-6 text-negro/80">{p.intro}</p>
+    <main className="mx-auto w-full max-w-152 px-6 py-22 md:py-32">
+      <h1>{p.title}</h1>
+      <p className="mt-6">{p.intro}</p>
       {p.sections.map((section) => (
-        <section key={section.title} className="mt-10">
-          <h2 className="text-negro">{section.title}</h2>
-          <ul className="mt-4 flex flex-col gap-3 leading-relaxed text-negro/80">
+        <section key={section.title} className="mt-14">
+          <h2 className="text-3xl!">{section.title}</h2>
+          <ul className="mt-5 flex flex-col gap-3">
             {section.body.map((line) => (
               <li key={line} className="border-l border-negro pl-4">
                 {line}
@@ -34,7 +34,7 @@ export default function PrivacyPage({ lang }: { lang: Locale }) {
           </ul>
         </section>
       ))}
-      <p className="mt-10 text-sm text-negro/70">
+      <p className="mt-14 text-sm text-gris">
         <a href={`mailto:${site.email}`} className="link">
           {site.email}
         </a>

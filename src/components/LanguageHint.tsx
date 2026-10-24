@@ -50,8 +50,8 @@ export default function LanguageHint({ lang, hints }: { lang: Locale; hints: Hin
   const isPost = pathname.includes("/blog/");
 
   return (
-    <div lang={suggested} className="border-b border-oro/60 bg-oro/25">
-      <div className="mx-auto flex max-w-300 flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-2 text-sm text-negro md:px-8">
+    <div lang={suggested} className="border-b border-linija bg-blanco">
+      <div className="mx-auto flex max-w-300 flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-2 text-sm text-negro md:px-8">
         <p>
           {isPost ? t.post : t.page}{" "}
           <a
