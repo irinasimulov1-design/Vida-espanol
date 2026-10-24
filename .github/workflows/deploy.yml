@@ -4,6 +4,9 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
+  # Svako jutro novi build, da se postovi zakazani za taj dan (date u budućnosti) pojave sami.
+  schedule:
+    - cron: "0 5 * * *"
 
 permissions:
   contents: read

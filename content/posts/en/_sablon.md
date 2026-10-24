@@ -1,6 +1,7 @@
 ---
 title: "Title — a clear question or promise (e.g. “Ser or estar: when to use which?”)"
 date: "2026-01-01"
+# draft: true   # draft: stays in the repo and Studio, not published
 # updated: "2026-02-01"   # add when you refresh the article — shows “Updated …”
 excerpt: "One sentence for the card and Google snippet (up to ~155 characters)."
 coverImage: "/Spain 1.jpg"

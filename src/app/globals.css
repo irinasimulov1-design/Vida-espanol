@@ -318,3 +318,21 @@
 
 summary::-webkit-details-marker { display: none; }
 summary::marker { content: ""; }
+
+/* VIDA Studio: telo posta se uređuje u istom .prose izgledu kao na sajtu */
+.studio-body .ProseMirror {
+  outline: none;
+  min-height: 12rem;
+}
+
+.studio-body .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--color-negro) 45%, transparent);
+}
+
+.studio-body .ProseMirror img.ProseMirror-selectednode {
+  outline: 2px solid var(--color-naranja);
+}

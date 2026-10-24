@@ -1,6 +1,7 @@
 ---
 title: "Naslov — jasno pitanje ili obećanje (npr. „Ser ili estar: kada koristiti koji?“)"
 date: "2026-01-01"
+# draft: true   # nacrt: ostaje u repou i Studiju, ne objavljuje se
 # updated: "2026-02-01"   # dodaj kad osvežiš tekst — prikazuje se „Ažurirano …“
 excerpt: "Jedna rečenica za karticu i Google opis (do ~155 znakova)."
 coverImage: "/Spain 1.jpg"

@@ -24,7 +24,7 @@ Nije konfigurisan nijedan test framework.
 - **Fontovi** (`src/app/fonts.ts`, `next/font/google`): Outfit 300/400/500 (tekst, UI; `font-sans`), Cormorant Garamond 500 + italik (naslovi i logo; `font-display`), Mrs Saint Delafield (rukopis, 1–2 reči; `font-script`) i Abril Fatface (samo posteri/razglednice; `font-poster`). Poslednja dva bez preload-a.
 - **Brending (VIDA · a la española)**: izvor za tehnički deo je `vida-brending.md` (fontovi, boje, raspored, komponente; NE ponuda, ton ni naslovi). Boje su Tailwind tokeni u `globals.css`: neutralne `blanco` (pozadina), `hormigon` (tihe sekcije), `negro` (sav tekst), pomoćne `papel` i `linija`; boje `naranja`, `rojo`, `tinto`, `verde`, `mostaza`, `oro`. 70% neutralno / 30% boja, jedna boja po sekciji; `tinto` SAMO za CTA dugmad; naranja/rojo/tinto nikad jedna do druge. Bez zaobljenja, tanke linije umesto senki (`shadow-papel` samo za „papirne“ predmete). Gotove klase: `btn`, `btn-ghost`, `btn-ghost-light`, `eyebrow`, `link`, `photo`. Sadržaj max 1200px (`max-w-300`), tekst max 560px, razmak sekcija `py-18 md:py-30`. Ton: lično, toplo, „ti“, bez straha i žurbe, tvrdnje moraju moći da se provere.
 - **Konfiguracija**: `src/lib/site.ts` je jedino mesto za domen (`vidaspanish.com`), GA4/Clarity ID-jeve, GSC/Bing verifikaciju, IndexNow ključ, Preply/LinkedIn/Instagram linkove i booking podešavanja. Prazno polje = ne prikazuje se / ne učitava.
-- **Dva root layout-a**: `src/app/[lang]/layout.tsx` (sajt, `<html lang={lang}>`) i `src/app/(ulaz)/layout.tsx` (samo `/`). 404 ide kroz `src/app/global-not-found.tsx` (`experimental.globalNotFound`).
+- **Tri root layout-a**: `src/app/[lang]/layout.tsx` (sajt, `<html lang={lang}>`), `src/app/(ulaz)/layout.tsx` (samo `/`) i `src/app/(studio)/layout.tsx` (samo `/studio`). 404 ide kroz `src/app/global-not-found.tsx` (`experimental.globalNotFound`).
 - **Tipovi**: generisani `LayoutProps` / `PageProps` / `RouteContext` iz Next.js 16 (`npx next typegen` posle dodavanja ruta).
 
 ## Dvojezičnost (sr / en)
@@ -42,11 +42,14 @@ Nije konfigurisan nijedan test framework.
 - `/[lang]/blog`, `/[lang]/blog/[slug]` — lista i post (Ukratko, FAQ, kutija o autorki, CTA, deljenje)
 - `/sr/o-meni`, `/en/about` — O meni
 - `/sr/privatnost`, `/en/privacy` — Politika privatnosti
+- `/studio` — VIDA Studio, editor bloga za Irinu (client-only, noindex, `Disallow` u robots)
 - Generisano pri buildu (`force-static`): `/sitemap.xml`, `/robots.txt`, `/llms.txt`, `/llms-full.txt`, `/[lang]/rss.xml`
 
 ## Komponente (`src/components/`)
 
 - `Logo.tsx`, `Header.tsx` (sa `LanguageSwitcher`), `Footer.tsx`, `LanguageHint.tsx`
+- `PostView.tsx` — izgled posta, deljen između `blog/[slug]` i Studija (slotovi za editabilna polja)
+- `studio/` — Studio: `Studio` (prijava, lista), `Editor` (WYSIWYG preko `PostView`), `RichBody` (Tiptap + markdown), `Fields`, `SeoPanel`; logika u `src/lib/studio/` (`github.ts` commit kroz Git Data API, `markdown.ts` frontmatter, `auth.ts`, `image.ts`, `slug.ts`)
 - `PostCard.tsx`, `ShareButtons.tsx`, `AuthorBox.tsx`, `SocialLinks.tsx` (Instagram/LinkedIn/Preply; profil bez URL-a se ne prikazuje)
 - `Booking.tsx` — forma za zakazivanje časa (client): podaci u Google Sheet (Apps Script), termin u Cal.com modalu. Preuzeto iz „prodajna stranica“.
 - `Analytics.tsx` (GA4 u Consent Mode v2, Clarity tek posle pristanka), `CookieConsent.tsx` (baner; stanje u `src/lib/consent.ts`), `CookieSettingsLink.tsx`
@@ -56,8 +59,10 @@ Nije konfigurisan nijedan test framework.
 ## Blog postovi
 
 - `content/posts/sr/*.md` i `content/posts/en/*.md`, parsira `src/lib/posts.ts` (`gray-matter` + `remark`). Fajlovi sa `_` se preskaču (šabloni `_sablon.md`).
-- Frontmatter: `title`, `date`, `updated?`, `excerpt`, `coverImage`, `categories`, `prevod?` (slug iste teme na drugom jeziku — pravi hreflang par), `ukratko?` (direktan odgovor na vrhu, za GEO), `faq?` (lista `pitanje`/`odgovor` → sekcija + FAQPage schema).
+- Frontmatter: `title`, `date`, `draft?` (nacrt, ne objavljuje se), `updated?`, `excerpt`, `coverImage`, `categories`, `prevod?` (slug iste teme na drugom jeziku — pravi hreflang par), `ukratko?` (direktan odgovor na vrhu, za GEO), `faq?` (lista `pitanje`/`odgovor` → sekcija + FAQPage schema).
 - Engleske verzije nisu doslovni prevodi: pisane su za strance koji uče španski.
+- Na sajtu su samo objavljeni postovi (`isPublished` u `posts.ts`): bez `draft: true` i bez datuma u budućnosti (zakazani; `deploy.yml` ima jutarnji cron). `prevod` se povezuje samo ako je i par objavljen.
+- Postove piše i menja **VIDA Studio** (`/studio`): commit u granu `site.studio.branch` preko GitHub App prijave; Cloudflare Worker `workers/studio-auth/` (OAuth + AI predlog prevoda). Podešavanje: `docs/studio.md`.
 
 ## Hosting, SEO i spoljni servisi
 

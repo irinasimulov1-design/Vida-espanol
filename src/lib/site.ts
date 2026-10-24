@@ -37,6 +37,18 @@ export const site = {
     googleScriptUrl:
       "https://script.google.com/macros/s/AKfycbyPZPp0Db3_WISOj4oeEueSDtASeg-seDR5bfbEus10PbPFoYcRl-6iNr7gZ1PMibde9Q/exec",
   },
+
+  // VIDA Studio (/studio): editor bloga na sajtu. Čuvanje = commit u repo → deploy.yml objavi.
+  // Podešavanje GitHub App-a i Workera: docs/studio.md. Prazan authUrl = Studio je isključen.
+  studio: {
+    repo: "irinasimulov1-design/Vida-espanol",
+    // Grana u koju Studio upisuje. Sajt se objavljuje samo sa "master"; druga grana = proba.
+    branch: "studio-proba",
+    // Iz koje grane nastaje `branch` ako još ne postoji (i odakle se čita do tada).
+    // Dok dvojezični sajt nije spojen u master, to je njegova grana.
+    baseBranch: "dvojezicni-blog-geo",
+    authUrl: "", // Cloudflare Worker studio-auth, npr. "https://vida-studio-auth.<nalog>.workers.dev"
+  },
 } as const;
 
 export function absoluteUrl(path: string): string {

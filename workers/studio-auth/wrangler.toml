@@ -1,0 +1,12 @@
+# VIDA Studio: prijava preko GitHub App-a i AI predlog prevoda. Uputstvo: docs/studio.md
+name = "vida-studio-auth"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Javni podaci (nisu tajni). Tajne idu SAMO preko `wrangler secret put`:
+#   GITHUB_CLIENT_SECRET, ANTHROPIC_API_KEY
+GITHUB_CLIENT_ID = ""
+REPO = "irinasimulov1-design/Vida-espanol"
+ALLOWED_ORIGINS = "https://vidaspanish.com,http://localhost:3000"

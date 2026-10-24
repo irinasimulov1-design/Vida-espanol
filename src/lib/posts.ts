@@ -3,7 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
-import type { Locale } from "@/i18n/config";
+import { otherLocale, type Locale } from "@/i18n/config";
 
 // Postovi po jeziku: content/posts/sr/*.md i content/posts/en/*.md.
 // Fajlovi koji počinju sa "_" (npr. _sablon.md) se preskaču.
@@ -28,6 +28,8 @@ export interface Post {
   /** Kratak, direktan odgovor na vrhu posta (GEO: AI najčešće citira baš ovo). */
   ukratko: string;
   faq: FaqItem[];
+  /** Nacrt: postoji u repou (i u Studiju), ali se ne objavljuje. */
+  draft: boolean;
 }
 
 export interface PostWithContent extends Post {
@@ -43,35 +45,66 @@ function postFiles(lang: Locale): string[] {
     .filter((fileName) => fileName.endsWith(".md") && !fileName.startsWith("_"));
 }
 
+function readFrontmatter(lang: Locale, slug: string) {
+  return matter(fs.readFileSync(path.join(postsRoot, lang, `${slug}.md`), "utf8"));
+}
+
+/** YAML bez navodnika (date: 2026-01-01) gray-matter vraća kao Date; svuda radimo sa "YYYY-MM-DD". */
+function isoDate(value: unknown): string {
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  return value ? String(value) : "";
+}
+
+/**
+ * Na sajtu su samo objavljeni postovi: bez nacrta i bez onih zakazanih za kasnije (datum u
+ * budućnosti). Zakazani se pojave sami kroz jutarnji build (cron u deploy.yml).
+ */
+function isPublished(data: { draft?: unknown; date?: unknown }): boolean {
+  return data.draft !== true && isoDate(data.date) <= new Date().toISOString().slice(0, 10);
+}
+
+/** Prevod se povezuje (hreflang, JSON-LD) samo ako je i on objavljen. */
+function publishedTranslation(lang: Locale, slug: unknown): string {
+  if (typeof slug !== "string" || !slug) return "";
+  const other = otherLocale(lang);
+  if (!fs.existsSync(path.join(postsRoot, other, `${slug}.md`))) return "";
+  return isPublished(readFrontmatter(other, slug).data) ? slug : "";
+}
+
 function readPost(lang: Locale, slug: string): { post: Post; markdown: string } {
-  const fileContents = fs.readFileSync(path.join(postsRoot, lang, `${slug}.md`), "utf8");
-  const { data, content } = matter(fileContents);
+  const { data, content } = readFrontmatter(lang, slug);
 
   return {
     post: {
       lang,
       slug,
       title: data.title,
-      date: data.date,
-      updated: data.updated ?? "",
+      date: isoDate(data.date),
+      updated: isoDate(data.updated),
       excerpt: data.excerpt,
       coverImage: data.coverImage ?? "",
       categories: data.categories ?? [],
-      prevod: data.prevod ?? "",
+      prevod: publishedTranslation(lang, data.prevod),
       ukratko: data.ukratko ?? "",
       faq: data.faq ?? [],
+      draft: data.draft === true,
     },
     markdown: content.trim(),
   };
 }
 
+function publishedPosts(lang: Locale): Post[] {
+  return postFiles(lang)
+    .map((fileName) => readPost(lang, fileName.replace(/\.md$/, "")).post)
+    .filter(isPublished);
+}
+
 export function getAllSlugs(lang: Locale): string[] {
-  return postFiles(lang).map((fileName) => fileName.replace(/\.md$/, ""));
+  return publishedPosts(lang).map((post) => post.slug);
 }
 
 export function getAllPosts(lang: Locale): Post[] {
-  return getAllSlugs(lang)
-    .map((slug) => readPost(lang, slug).post)
+  return publishedPosts(lang)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
