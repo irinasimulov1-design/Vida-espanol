@@ -136,8 +136,10 @@ async function image(path: string, env: Env): Promise<Response> {
     return new Response("Not found", { status: 404 });
   }
   const res = await fetch(
-    `https://raw.githubusercontent.com/${env.REPO}/${env.IMAGE_BRANCH}/public/${encodeURI(decoded)}`,
-    { cf: { cacheEverything: true, cacheTtl: 86400 } },
+    `https://raw.githubusercontent.com/${env.REPO}/${env.IMAGE_BRANCH}/public/${encodeURI(decoded)}?v=2`,
+    // Kešira se samo pronađena slika; 404 (npr. slika još nije pushovana) se ne pamti.
+    // ?v= menja ključ keša na Cloudflare-u; povećaj ga ako zapamćen odgovor treba odbaciti.
+    { cf: { cacheEverything: true, cacheTtlByStatus: { "200-299": 86400, "404": 0 } } },
   );
   if (!res.ok) return new Response("Not found", { status: 404 });
   return new Response(res.body, {
