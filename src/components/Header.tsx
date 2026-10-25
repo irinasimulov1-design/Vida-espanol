@@ -1,46 +1,52 @@
 import Link from "next/link";
+import Naranja from "@/components/Naranja";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import MobileMenu from "@/components/MobileMenu";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n";
+import { bookingHref, href } from "@/lib/routes";
 
-export default function Header() {
+/** Navigacija: na pozadini sajta, bez trake; svaki link je crni blok, bordo na hover. */
+export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"] }) {
+  const navLinks = [
+    { label: t.blog, href: href("blog", lang) },
+    { label: t.about, href: href("about", lang) },
+  ];
+
   return (
-    <header className="absolute top-0 left-0 w-full z-50">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-8 py-5">
-        <Link
-          href="/"
-          className="text-2xl font-bold tracking-tight text-white"
-        >
-          Vida<span className="text-amber-400">*</span>
-        </Link>
-        <ul className="flex items-center gap-8 text-sm font-medium">
+    <header className="relative z-50 w-full">
+      <nav className="mx-auto flex max-w-300 items-center justify-between gap-3 px-5 pt-6 md:px-8">
+        {/* Mobilni: „Meni“ levo, narandža u sredini */}
+        <div className="flex items-center gap-4 md:hidden">
+          <MobileMenu
+            lang={lang}
+            t={t}
+            links={[{ label: t.home, href: href("home", lang) }, ...navLinks]}
+          />
+        </div>
+
+        <ul className="flex items-center gap-1.5">
           <li>
-            <Link
-              href="/"
-              className="text-white/80 transition-colors hover:text-white"
-            >
-              Početna
+            <Link href={href("home", lang)} aria-label={`VIDA — ${t.home}`} className="mr-3 block transition-transform duration-300 hover:-rotate-12">
+              <Naranja className="h-8 w-8" />
             </Link>
           </li>
-          <li>
-            <Link
-              href="/blog"
-              className="text-white/80 transition-colors hover:text-white"
-            >
-              Blog
-            </Link>
+          {navLinks.map((link) => (
+            <li key={link.href} className="hidden md:block">
+              <Link href={link.href} className="nav-blok">
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <ul className="flex items-center gap-1.5">
+          <li className="hidden md:block">
+            <LanguageSwitcher lang={lang} label={t.language} />
           </li>
           <li>
-            <Link
-              href="/o-meni"
-              className="text-white/80 transition-colors hover:text-white"
-            >
-              O meni
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/o-meni"
-              className="rounded-full bg-rose-500 px-5 py-2 text-white transition-colors hover:bg-rose-600"
-            >
-              Kontakt
+            <Link href={bookingHref(lang)} className="nav-blok whitespace-nowrap">
+              {t.book}
             </Link>
           </li>
         </ul>

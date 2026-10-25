@@ -1,39 +1,245 @@
 @import "tailwindcss";
 
+/* VIDA · a la española — brend tokeni (izvor: vida-brending.md)
+   Živo, a ne sterilno, ali većinom minimalizam: manje je više.
+   Okvir sajta je crno-beo (fondo, negro, gris). Boja živi samo u malim detaljima i fotkama,
+   najviše jedan predmet u boji po sekciji. Bordo (tinto) se javlja tek na hover/fokus. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-fondo);
+  --foreground: var(--color-texto);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-dm-sans);
+
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-script: var(--font-mrs-saint-delafield), cursive;
+  --font-poster: var(--font-abril-fatface), Georgia, serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-dm-sans), Arial, Helvetica, sans-serif;
+@theme {
+  /* okvir (crno-belo) */
+  --color-fondo: #FBFAF7;
+  --color-negro: #1F1F1F;
+  --color-texto: #4A4743;
+  --color-gris: #8A8782;
+  --color-linija: #E6E2DA;
+  --color-blanco: #F5F2EC;
+  --color-papel: #FFFDF8;
+
+  /* boje predmeta i detalja */
+  --color-naranja: #E07B39;
+  --color-rojo: #B3262E;
+  --color-tinto: #6B1F28;
+  --color-verde: #2F5D4A;
+  --color-mostaza: #C9A13B;
+  --color-oro: #E8C88A;
+
+  /* senke samo za papirne predmete; na hover malo jače */
+  --shadow-papel: 0 14px 30px rgba(0, 0, 0, 0.1);
+  --shadow-predmet: 0 20px 38px rgba(0, 0, 0, 0.14);
+}
+
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--color-negro);
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    line-height: 1.12;
+  }
+
+  h2 {
+    font-size: 2.125rem;
+    line-height: 1.12;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-style: italic;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  /* Fokus za tastaturu: tanka bordo linija */
+  :focus-visible {
+    outline: 2px solid var(--color-tinto);
+    outline-offset: 3px;
+  }
+
+  @media (width >= 48rem) {
+    h1 {
+      font-size: 3.25rem;
+    }
+
+    h2 {
+      font-size: 3rem;
+    }
+
+    h3 {
+      font-size: 1.625rem;
+    }
+  }
+}
+
+@layer components {
+  /* Oznaka / eyebrow: sitno, velika slova, sivo */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--color-gris);
+  }
+
+  /* Dugme: crno; bordo tek na hover/fokus */
+  .btn {
+    display: inline-block;
+    background: var(--color-negro);
+    color: var(--color-fondo);
+    font: 400 12px/1 var(--font-sans);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 15px 26px;
+    border: 0;
+    border-radius: 0;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    background: var(--color-tinto);
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-negro);
+    box-shadow: inset 0 0 0 1px var(--color-negro);
+  }
+
+  .btn-ghost:hover,
+  .btn-ghost:focus-visible {
+    background: var(--color-tinto);
+    color: var(--color-fondo);
+    box-shadow: inset 0 0 0 1px var(--color-tinto);
+  }
+
+  /* Ghost dugme preko fotke */
+  .btn-ghost-light {
+    color: var(--color-fondo);
+    box-shadow: inset 0 0 0 1px var(--color-fondo);
+  }
+
+  /* Tekstualni poziv: velika slova sa tankom linijom ispod (npr. „Zakaži čas“) */
+  .btn-link {
+    display: inline-block;
+    font: 400 12px/1 var(--font-sans);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-negro);
+    padding-bottom: 8px;
+    border-bottom: 1px solid currentColor;
+    transition: color 0.25s ease;
+  }
+
+  .btn-link:hover,
+  .btn-link:focus-visible {
+    color: var(--color-tinto);
+  }
+
+  /* Navigacija: svaki link je zaseban crni blok; na hover postaje bordo */
+  .nav-blok {
+    display: inline-block;
+    background: var(--color-negro);
+    color: var(--color-fondo);
+    font: 400 11px/1 var(--font-sans);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .nav-blok:hover,
+  .nav-blok:focus-visible,
+  .nav-blok[aria-expanded="true"] {
+    background: var(--color-tinto);
+  }
+
+  /* Link u tekstu: crn sa tankom linijom; bordo na hover */
+  .link {
+    color: var(--color-negro);
+    text-decoration: underline;
+    text-decoration-color: var(--color-linija);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: color 0.25s ease, text-decoration-color 0.25s ease;
+  }
+
+  .link:hover,
+  .link:focus-visible {
+    color: var(--color-tinto);
+    text-decoration-color: currentColor;
+  }
+
+  /* Tretman fotki: topao filmski ton */
+  .photo {
+    filter: saturate(0.92) sepia(0.08) contrast(0.97);
+    border-radius: 0;
+    object-fit: cover;
+  }
+
+  /* Fotka na kartici: monohromatska u mirovanju, boja na hover/fokus kartice */
+  .photo-mono {
+    object-fit: cover;
+    filter: grayscale(1) contrast(0.95);
+    transition: filter 0.4s ease, transform 0.4s ease;
+  }
+
+  .group:hover .photo-mono,
+  .group:focus-visible .photo-mono {
+    filter: saturate(0.92) sepia(0.08) contrast(0.97);
+  }
 }
 
 .prose h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 2rem;
+  font-size: 2.125rem;
+  margin-top: 2.5rem;
   margin-bottom: 0.75rem;
 }
 
 .prose h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-top: 1.5rem;
+  font-size: 1.5rem;
+  margin-top: 1.75rem;
   margin-bottom: 0.5rem;
 }
 
 .prose p {
   margin-bottom: 1rem;
-  line-height: 1.75;
 }
 
 .prose ul,
@@ -42,31 +248,100 @@ body {
   padding-left: 1.5rem;
 }
 
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
 .prose li {
   margin-bottom: 0.25rem;
 }
 
+.prose li::marker {
+  color: var(--color-naranja);
+}
+
 .prose a {
-  color: #2563eb;
+  color: var(--color-negro);
   text-decoration: underline;
+  text-decoration-color: var(--color-linija);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.prose a:hover {
+  color: var(--color-tinto);
+  text-decoration-color: currentColor;
+}
+
+.prose strong {
+  font-weight: 500;
+  color: var(--color-negro);
 }
 
 .prose blockquote {
-  border-left: 3px solid #d4d4d8;
+  border-left: 1px solid var(--color-negro);
   padding-left: 1rem;
-  color: #71717a;
+  font-family: var(--font-display);
   font-style: italic;
+  font-size: 1.35rem;
   margin-bottom: 1rem;
 }
 
 .prose pre {
-  background: #f4f4f5;
+  background: var(--color-papel);
+  border: 1px solid var(--color-linija);
   padding: 1rem;
-  border-radius: 0.5rem;
   overflow-x: auto;
   margin-bottom: 1rem;
 }
 
 .prose code {
   font-size: 0.9em;
+}
+
+.prose img {
+  filter: saturate(0.92) sepia(0.08) contrast(0.97);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--color-linija);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.prose th {
+  background: var(--color-papel);
+  font-weight: 500;
+}
+
+summary::-webkit-details-marker { display: none; }
+summary::marker { content: ""; }
+
+/* VIDA Studio: telo posta se uređuje u istom .prose izgledu kao na sajtu */
+.studio-body .ProseMirror {
+  outline: none;
+  min-height: 12rem;
+}
+
+.studio-body .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--color-negro) 45%, transparent);
+}
+
+.studio-body .ProseMirror img.ProseMirror-selectednode {
+  outline: 2px solid var(--color-naranja);
 }

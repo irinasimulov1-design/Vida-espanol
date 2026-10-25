@@ -1,0 +1,21 @@
+# VIDA Studio: prijava preko GitHub App-a i AI predlog prevoda. Uputstvo: docs/studio.md
+name = "vida-studio-auth"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Javni podaci (nisu tajni). Tajne idu SAMO preko `wrangler secret put`:
+#   GITHUB_CLIENT_SECRET, ANTHROPIC_API_KEY, RESEND_API_KEY
+#   TEST_TO (adresa za probna pisma — lični podatak, zato nije ovde u javnom repou)
+GITHUB_CLIENT_ID = "Iv23lig7ENE7rDAUhzKL"
+REPO = "irinasimulov1-design/Vida-espanol"
+ALLOWED_ORIGINS = "https://vidaspanish.com,http://localhost:3000"
+# Grana iz koje Worker služi slike za pisma (/slika/…). Posle objave sajta: "master".
+IMAGE_BRANCH = "dvojezicni-blog-geo"
+
+# Pisma (Resend). Segment = lista; SR je postojeća lista sa starog sajta, EN se pravi u Resend-u.
+RESEND_SEGMENT_SR = "ea07fc7f-3fbb-4cab-8501-b2f6dc705c16"
+RESEND_SEGMENT_EN = "39166cea-320b-4998-9ea0-359846e3d188"
+NEWSLETTER_FROM = "Irina · VIDA <pisma@vidaspanish.com>"
+SITE_URL = "https://vidaspanish.com"

@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git clone:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(gh repo create:*)",
+      "Bash(bun run lint:*)",
+      "Bash(turbo lint:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(bun add:*)",
+      "Bash(bun run typecheck:*)",
+      "Bash(bun run:*)",
+      "Bash(npm run *)",
+      "Bash(grep:*)",
+      "Bash(bunx tsc:*)",
+      "Bash(bunx eslint:*)",
+      "Bash(pnpm dlx shadcn@latest add:*)",
+      "Bash(claude plugins uninstall --help:*)",
+      "Bash(claude plugin --help:*)",
+      "Bash(claude plugin uninstall --help:*)",
+      "Bash(claude plugin uninstall:*)",
+      "Bash(cat:*)",
+      "Bash(node:*)"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/*.crt)",
+      "Read(**/*.pub)",
+      "Read(**/*secret*)", 
+      "Bash(rm -rf *)"
+    ]
+  }
+}

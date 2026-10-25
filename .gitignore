@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+workers/*/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -33,6 +34,10 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# cloudflare worker (lokalni ključevi i keš)
+.dev.vars*
+.wrangler/
+
 # vercel
 .vercel
 
@@ -40,5 +45,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# large media files
-public/14388911-uhd_3840_2160_60fps.mp4
+# interni dokumenti (ne idu u javni repo)
+vida-brending.md
+
+# originalne fotografije u punoj rezoluciji; u git ide samo web verzija koju sajt koristi
+public/Andaluzija prozori *.jpg
+public/pomorandze *.jpg
+
+# Playwright MCP (snimci i logovi alata)
+.playwright-mcp/

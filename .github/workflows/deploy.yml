@@ -4,6 +4,9 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
+  # Svako jutro novi build, da se postovi zakazani za taj dan (date u budućnosti) pojave sami.
+  schedule:
+    - cron: "0 5 * * *"
 
 permissions:
   contents: read
@@ -41,3 +44,22 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Posle deploya javlja Bing-u (i ostalim IndexNow pretraživačima) sve URL-ove iz sitemape,
+  # da novi tekstovi budu indeksirani za par minuta. Neuspeh ovde ne obara deploy.
+  indexnow:
+    runs-on: ubuntu-latest
+    needs: deploy
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ping IndexNow
+        run: |
+          HOST=$(cat public/CNAME)
+          KEY=$(grep -o 'indexNowKey: "[a-f0-9]*"' src/lib/site.ts | cut -d'"' -f2)
+          URLS=$(curl -fsSL "https://$HOST/sitemap.xml" | grep -o '<loc>[^<]*' | sed 's/<loc>//' | jq -R . | jq -sc .)
+          jq -n --arg host "$HOST" --arg key "$KEY" --argjson urls "$URLS" \
+            '{host: $host, key: $key, keyLocation: "https://\($host)/\($key).txt", urlList: $urls}' \
+            | curl -sS -X POST "https://api.indexnow.org/indexnow" \
+                -H "Content-Type: application/json; charset=utf-8" -d @- -w "IndexNow status: %{http_code}\n"
