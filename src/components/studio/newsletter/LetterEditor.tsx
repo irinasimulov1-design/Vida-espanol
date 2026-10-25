@@ -5,6 +5,7 @@ import { commitFiles, ConflictError, blobSha } from "@/lib/studio/github";
 import {
   cancelLetter,
   contentHash,
+  emailStatus,
   letterPath,
   listSizes,
   newLetterId,
@@ -156,13 +157,49 @@ export default function LetterEditor({
     setBusy("");
   }
 
+  /** Prati probu u Resend-u ~40 s, da Irina vidi da li je isporučena ili zašto nije. */
+  async function followTest(id: string, to: string) {
+    for (let i = 0; i < 10; i++) {
+      await new Promise((r) => setTimeout(r, 4000));
+      let event = "";
+      try {
+        event = (await emailStatus(token, id)).lastEvent;
+      } catch {
+        return;
+      }
+      if (event === "delivered" || event === "opened" || event === "clicked") {
+        return setBanner({
+          kind: "ok",
+          text: `Proba je isporučena na ${to}. Ako je ne vidiš u inboxu, pogledaj Spam i Promocije.`,
+        });
+      }
+      if (event === "bounced") {
+        return setBanner({ kind: "error", text: `Server adrese ${to} je odbio probu. Proveri da li je adresa tačna.` });
+      }
+      if (event === "suppressed") {
+        return setBanner({
+          kind: "error",
+          text: `Resend ne šalje na ${to}: adresa je na listi blokiranih (ranije vraćeno pismo ili prijava kao spam). Skini je u Resend → Suppressions.`,
+        });
+      }
+      if (event === "complained") {
+        return setBanner({ kind: "error", text: `Pismo na ${to} je ranije prijavljeno kao spam, pa Resend ne šalje dalje.` });
+      }
+      if (event === "failed") {
+        return setBanner({ kind: "error", text: `Slanje na ${to} nije uspelo u Resend-u. Pogledaj Resend → Emails.` });
+      }
+    }
+    setBanner({ kind: "ok", text: `Proba je poslata na ${to}, ali isporuka još nije potvrđena. Pogledaj Resend → Emails.` });
+  }
+
   async function onTest() {
     if (!letter.subject.trim()) return setBanner({ kind: "error", text: "Pismu treba naslov." });
     setBusy("test");
     try {
       const res = await sendTest(token, letter.subject.trim(), html);
       setTestedHash(hash);
-      setBanner({ kind: "ok", text: `Proba je poslata na ${res.to}. Pogledaj je na telefonu i računaru.` });
+      setBanner({ kind: "ok", text: `Proba je poslata na ${res.to}. Proveravam da li je stigla…` });
+      followTest(res.id, res.to);
     } catch (e) {
       setBanner({ kind: "error", text: e instanceof Error ? e.message : "Proba nije poslata." });
     }

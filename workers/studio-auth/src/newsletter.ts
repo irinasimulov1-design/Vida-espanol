@@ -225,16 +225,27 @@ async function lists(env: NewsletterEnv): Promise<Response> {
 async function test(request: Request, env: NewsletterEnv): Promise<Response> {
   const { subject, html } = (await request.json().catch(() => ({}))) as { subject?: string; html?: string };
   if (!subject || !html) return json({ error: "Pismo nema naslov ili sadržaj." }, 400);
-  await resend(env, "/emails", {
+  // Secret upisan kroz terminal ume da ponese razmak ili novi red; više adresa ide sa zarezom.
+  const to = (env.TEST_TO ?? "").split(",").map((a) => a.trim()).filter(Boolean);
+  if (to.length === 0) return json({ error: "Adresa za probe (TEST_TO) nije podešena u Workeru." }, 400);
+  const sent = await resend<{ id: string }>(env, "/emails", {
     method: "POST",
     body: JSON.stringify({
       from: env.NEWSLETTER_FROM,
-      to: [env.TEST_TO],
+      to,
       subject: `[PROBA] ${subject}`,
       html: html.split("{{{RESEND_UNSUBSCRIBE_URL}}}").join(env.SITE_URL),
     }),
   });
-  return json({ ok: true, to: env.TEST_TO });
+  return json({ ok: true, to: to.join(", "), id: sent.id });
+}
+
+/** Šta se desilo sa poslatim pismom (isporučeno, odbijeno, blokirano…), za probu u Studiju. */
+async function emailStatus(request: Request, env: NewsletterEnv): Promise<Response> {
+  const id = new URL(request.url).searchParams.get("id");
+  if (!id) return json({ error: "Nema pisma." }, 400);
+  const email = await resend<{ last_event?: string; to?: string[] }>(env, `/emails/${encodeURIComponent(id)}`);
+  return json({ lastEvent: email.last_event ?? "", to: (email.to ?? []).join(", ") });
 }
 
 async function send(request: Request, env: NewsletterEnv): Promise<Response> {
@@ -315,6 +326,7 @@ export async function studioRoute(request: Request, env: NewsletterEnv, pathname
   try {
     if (request.method === "GET" && pathname === "/newsletter/lists") return await lists(env);
     if (request.method === "POST" && pathname === "/newsletter/test") return await test(request, env);
+    if (request.method === "GET" && pathname === "/newsletter/email") return await emailStatus(request, env);
     if (request.method === "POST" && pathname === "/newsletter/send") return await send(request, env);
     if (request.method === "POST" && pathname === "/newsletter/cancel") return await cancel(request, env);
     if (request.method === "GET" && pathname === "/newsletter/history") return await history(env);

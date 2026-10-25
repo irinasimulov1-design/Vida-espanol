@@ -86,7 +86,12 @@ export function listSizes(token: string) {
 }
 
 export function sendTest(token: string, subject: string, html: string) {
-  return worker<{ ok: true; to: string }>(token, "/newsletter/test", { subject, html });
+  return worker<{ ok: true; to: string; id: string }>(token, "/newsletter/test", { subject, html });
+}
+
+/** Resend `last_event`: sent, delivered, bounced, complained, suppressed, failed, delivery_delayed… */
+export function emailStatus(token: string, id: string) {
+  return worker<{ lastEvent: string; to: string }>(token, `/newsletter/email?id=${encodeURIComponent(id)}`);
 }
 
 export function sendLetter(
