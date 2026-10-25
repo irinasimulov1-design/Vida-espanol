@@ -11,6 +11,8 @@ compatibility_flags = ["nodejs_compat"]
 GITHUB_CLIENT_ID = "Iv23lig7ENE7rDAUhzKL"
 REPO = "irinasimulov1-design/Vida-espanol"
 ALLOWED_ORIGINS = "https://vidaspanish.com,http://localhost:3000"
+# Grana iz koje Worker služi slike za pisma (/slika/…). Posle objave sajta: "master".
+IMAGE_BRANCH = "dvojezicni-blog-geo"
 
 # Pisma (Resend). Segment = lista; SR je postojeća lista sa starog sajta, EN se pravi u Resend-u.
 RESEND_SEGMENT_SR = "ea07fc7f-3fbb-4cab-8501-b2f6dc705c16"

@@ -3,6 +3,7 @@
 //   GET  /callback  → menja kod za token i vraća ga prozoru Studija (postMessage)
 //   POST /translate → AI predlog verzije posta na drugom jeziku (Claude)
 //   /newsletter/*   → pisma preko Resend-a (vidi newsletter.ts)
+//   GET  /slika/…   → slike za pisma (potpis, naslovne slike) iz public/ foldera repoa
 // Tajne (GITHUB_CLIENT_SECRET, ANTHROPIC_API_KEY) postoje samo ovde, kao Worker secrets.
 import Anthropic from "@anthropic-ai/sdk";
 import { confirm, studioRoute, subscribe, type NewsletterEnv } from "./newsletter";
@@ -13,6 +14,7 @@ interface Env extends NewsletterEnv {
   ANTHROPIC_API_KEY: string;
   REPO: string;
   ALLOWED_ORIGINS: string;
+  IMAGE_BRANCH: string;
 }
 
 const STATE_TTL_MS = 10 * 60 * 1000;
@@ -115,6 +117,34 @@ async function callback(request: Request, env: Env): Promise<Response> {
   return popupResult(origin, { token: data.access_token });
 }
 
+const IMAGE_TYPES: Record<string, string> = {
+  png: "image/png",
+  jpg: "image/jpeg",
+  jpeg: "image/jpeg",
+  webp: "image/webp",
+  gif: "image/gif",
+};
+
+/**
+ * Slike u pismima (potpis, naslovne slike tekstova) ne zavise od toga da li je sajt objavljen:
+ * Worker ih uzima iz public/ foldera grane IMAGE_BRANCH i kešira ih na Cloudflare-u.
+ */
+async function image(path: string, env: Env): Promise<Response> {
+  const decoded = decodeURIComponent(path);
+  const ext = decoded.split(".").pop()?.toLowerCase() ?? "";
+  if (!IMAGE_TYPES[ext] || decoded.includes("..") || !/^[\p{L}\p{N} _.\-/]+$/u.test(decoded)) {
+    return new Response("Not found", { status: 404 });
+  }
+  const res = await fetch(
+    `https://raw.githubusercontent.com/${env.REPO}/${env.IMAGE_BRANCH}/public/${encodeURI(decoded)}`,
+    { cf: { cacheEverything: true, cacheTtl: 86400 } },
+  );
+  if (!res.ok) return new Response("Not found", { status: 404 });
+  return new Response(res.body, {
+    headers: { "Content-Type": IMAGE_TYPES[ext], "Cache-Control": "public, max-age=86400" },
+  });
+}
+
 /** Samo neko ko sme da menja repo sajta sme da troši AI (i ključ nikad ne izlazi iz Workera). */
 async function canWrite(env: Env, token: string): Promise<boolean> {
   const res = await fetch(`https://api.github.com/repos/${env.REPO}`, {
@@ -190,6 +220,7 @@ export default {
     if (request.method === "GET" && pathname === "/callback") return callback(request, env);
 
     if (request.method === "GET" && pathname === "/newsletter/confirm") return confirm(request, env);
+    if (request.method === "GET" && pathname.startsWith("/slika/")) return image(pathname.slice("/slika/".length), env);
 
     // Sve ostalo zovu sajt i Studio iz browsera: samo sa dozvoljenih adresa (CORS).
     if (pathname !== "/translate" && !pathname.startsWith("/newsletter/")) {
@@ -214,7 +245,7 @@ export default {
     if (request.method === "POST" && pathname === "/translate") return translate(request, env, origin);
 
     // Slanje i pregled liste samo za nalog koji sme da menja sajt.
-    const token = request.headers.get("Authorization")?.replace(/^Bearers+/i, "") ?? "";
+    const token = request.headers.get("Authorization")?.replace(/^Bearer\s+/i, "") ?? "";
     if (!token || !(await canWrite(env, token))) {
       return new Response(JSON.stringify({ error: "Prijava je istekla. Prijavi se ponovo." }), {
         status: 401,

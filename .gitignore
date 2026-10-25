@@ -51,3 +51,6 @@ vida-brending.md
 # originalne fotografije u punoj rezoluciji; u git ide samo web verzija koju sajt koristi
 public/Andaluzija prozori *.jpg
 public/pomorandze *.jpg
+
+# Playwright MCP (snimci i logovi alata)
+.playwright-mcp/

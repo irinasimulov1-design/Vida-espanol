@@ -66,9 +66,12 @@ function withUtm(url: string, campaign: string): string {
   return u.toString();
 }
 
-/** Apsolutna adresa slike sa sajta (/Spain 1.jpg → https://vidaspanish.com/Spain%201.jpg). */
+/** Apsolutna adresa slike za pismo (/Spain 1.jpg → …/slika/Spain%201.jpg). */
 export function imageUrl(src: string): string {
-  return /^https?:\/\//.test(src) ? src : absoluteUrl(encodeURI(src));
+  if (/^https?:\/\//.test(src)) return src;
+  // Slike u pismu služi Worker (iz repoa), da rade i pre nego što je sajt objavljen.
+  if (site.studio.authUrl) return `${site.studio.authUrl}/slika${encodeURI(src)}`;
+  return absoluteUrl(encodeURI(src));
 }
 
 /** Inline stilovi za HTML iz editora, isti izgled kao .prose na sajtu. */
@@ -126,7 +129,7 @@ export function renderEmail(letter: LetterContent): string {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light only">
 <title>${escape(letter.subject)}</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Outfit:wght@300;400&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Outfit:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body style="margin:0;padding:0;background:${C.fondo}">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0">${escape(letter.preheader)}&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;</div>
@@ -142,7 +145,8 @@ export function renderEmail(letter: LetterContent): string {
 <tr><td style="padding:38px 32px 8px;background:${C.fondo}">
 ${styleBody(letter.bodyHtml, letter.campaign)}
 ${letter.post ? postCard(letter.post, letter.campaign, letter.lang) : ""}
-<p style="margin:26px 0 0;font-family:'Mrs Saint Delafield',${SERIF};font-size:34px;color:${C.naranja}">${t.signature}</p>
+<!-- Potpis je slika: Gmail i Outlook ne učitavaju web fontove, pa bi rukopis pao na običan serif. -->
+<img src="${imageUrl("/potpis-irina.png")}" alt="${t.signature}" width="132" height="68" style="display:block;width:132px;height:auto;margin:22px 0 0;border:0;font-family:${SERIF};font-size:28px;font-style:italic;color:${C.naranja}">
 </td></tr>
 <tr><td align="center" style="padding:34px 32px 0;border-top:1px solid ${C.linija}">
 <p style="margin:0;font-family:${SANS};font-size:12px;line-height:1.7;color:${C.gris}">${t.why} <a href="${home}" style="color:${C.gris}">${host}</a>.</p>
